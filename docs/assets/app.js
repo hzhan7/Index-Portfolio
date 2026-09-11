@@ -1,26 +1,45 @@
 import {portfolioStats,adjustWeight,displayWeights} from './math.js';
+import {computeModelMetrics} from './mean-variance.js?v=2';
+import {drawMeanVarianceChart} from './model-chart.js?v=2';
 
 const $=id=>document.getElementById(id),d3=window.d3;
-const keys={cagr_floor:'maxSharpeAtLeastSpxCagr',cagr_equal:'equalSpxCagr',sharpe_floor:'maxCagrAtLeastSpxSharpe',sharpe_equal:'equalSpxSharpe',max_sharpe:'maxSharpe'};
-const names={cagr_floor:'收益 ≥ 标普，夏普最大',cagr_equal:'收益 = 标普，夏普最大',sharpe_floor:'夏普 ≥ 标普，收益最大',sharpe_equal:'夏普 = 标普，收益最大',max_sharpe:'无约束最高夏普'};
+const keys={cagr_floor:'maxSharpeAtLeastSpxCagr',cagr_equal:'equalSpxCagr',sharpe_floor:'maxCagrAtLeastSpxSharpe',sharpe_equal:'equalSpxSharpe',max_sharpe:'maxSharpe',tangency:'tangency',utility:'utility',risk_budget:'riskBudget'};
+const modelObjectives=new Set(['tangency','utility','risk_budget']);
 const pct=v=>(v*100).toFixed(2)+'%',fmt=v=>Number.isFinite(v)?v.toFixed(3):'—';
 const state={history:[],main:null,config:null,w:[.4,.3,.3],sensitivity:[],mainId:0,sensitivityId:0};
 const tooltip=$('chart-tooltip');
-const worker=new Worker(new URL('./worker.js',import.meta.url),{type:'module'});
+const worker=new Worker(new URL('./worker.js?v=2',import.meta.url),{type:'module'});
 const colors={ndx:'#2563c9',spx:'#bf8030',bond:'#788797',ink:'#17253e',line:'#dce3ed',accent:'#19634f'};
-function readConfig(){return{start:$('start-month').value,end:$('end-month').value,equityIncome:$('equity-income').checked,bondIncome:$('bond-income').checked,objective:$('objective').value};}
+function percentInput(id){return $(id).value.trim()===''?NaN:Number($(id).value)/100;}
+function readConfig(){
+  const objective=$('objective').value,active=modelObjectives.has(objective);
+  return{start:$('start-month').value,end:$('end-month').value,equityIncome:$('equity-income').checked,bondIncome:$('bond-income').checked,objective,
+    expectedSource:active?$('expected-source').value:'historical',expectedReturns:[0,1,2].map(i=>percentInput(`expected-${i}`)),
+    anchorSource:objective==='tangency'?$('anchor-source').value:'historical',anchorRate:percentInput('anchor-rate'),
+    budgetSource:objective==='risk_budget'?$('budget-source').value:'sp500',targetVol:percentInput('target-vol'),gamma:Number($('risk-gamma').value)};
+}
+function updateControlVisibility(){
+  const objective=$('objective').value;
+  $('model-controls').hidden=!modelObjectives.has(objective);$('anchor-controls').hidden=objective!=='tangency';$('budget-controls').hidden=objective!=='risk_budget';$('utility-controls').hidden=objective!=='utility';
+  for(let i=0;i<3;i++)$(`expected-${i}`).disabled=$('expected-source').value!=='custom';
+  $('anchor-rate').disabled=$('anchor-source').value!=='custom';$('target-vol').disabled=$('budget-source').value!=='custom';$('gamma-value').textContent=Number($('risk-gamma').value).toFixed(1);
+}
 function labelDate(month){const [y,m]=month.split('-').map(Number);return `${y}.${String(m).padStart(2,'0')}.${new Date(Date.UTC(y,m,0)).getUTCDate()}`;}
 function notices(config){
   const stock=config.equityIncome?'股票计入股息再投资':'股票不含股息',bond=config.bondIncome?'美债计入模型票息':'美债剔除模型票息';
   return `${stock} · ${bond}。${config.equityIncome?'已核验含息共同基点为1999年3月末；1985–1999年含息缺口未填补。':'1985起价格历史可用；这不是包含全部收入的总回报。'}`;
 }
 function requestMain(){
+  updateControlVisibility();
   const config=readConfig();
   const earliest=config.equityIncome?'1999-03':'1985-01';
   if(!config.start||!config.end||config.start<earliest||config.end>'2025-12'||config.start>=config.end){
     state.mainId++;document.body.classList.remove('computing');
     $('data-notice').textContent=`所选日期不可用：当前口径起点最早为${earliest}，终点最晚为2025-12。图表仍显示上一组有效条件。`;
     return;
+  }
+  if((config.expectedSource==='custom'&&config.expectedReturns.some(v=>!Number.isFinite(v)))||(config.anchorSource==='custom'&&!Number.isFinite(config.anchorRate))||(config.budgetSource==='custom'&&(!Number.isFinite(config.targetVol)||config.targetVol<0))){
+    state.mainId++;document.body.classList.remove('computing');$('data-notice').textContent='请填写完整、有效的模型参数。图表仍显示上一组有效条件。';return;
   }
   $('data-notice').textContent=notices(config)+' 正在重新计算…';
   document.body.classList.add('computing');
@@ -41,9 +60,13 @@ worker.onmessage=({data})=>{
     $('sample-dates').textContent=`${labelDate(state.config.start)} — ${labelDate(state.config.end)}`;
     $('sample-details').textContent=`${state.main.rows.length}个月 · 美元 · 每月再平衡 · 无杠杆`;
     $('data-notice').textContent=notices(state.config);
-    $('cagr-label').textContent=state.config.equityIncome&&state.config.bondIncome?'含息 CAGR':'当前口径 CAGR';
-    $('contour-key').textContent=`┄ 标普 ${state.config.objective.startsWith('sharpe')?'夏普':'CAGR'} 等值线`;
-    setWeights(state.optimal?.w??[0,1,0],true);
+    $('cagr-label').textContent=state.config.equityIncome&&state.config.bondIncome?'历史含息 CAGR':'历史当前口径 CAGR';
+    $('contour-key').textContent=`┄ 标普 ${state.config.objective.startsWith('sharpe')?'夏普':'CAGR'} ${modelObjectives.has(state.config.objective)?'参考':''}等值线`;
+    const model=state.main.meanVariance.model;
+    if($('expected-source').value!=='custom')for(let i=0;i<3;i++)$(`expected-${i}`).value=(model.historicalAnnualArithmeticReturns[i]*100).toFixed(4);
+    if($('anchor-source').value!=='custom')$('anchor-rate').value=(model.historicalAnnualRfProxy*100).toFixed(4);
+    if($('budget-source').value!=='custom')$('target-vol').value=(Math.sqrt(model.annualCovariance[1][1])*100).toFixed(4);
+    setWeights(state.optimal?.w??state.w,true);
     redraw();requestSensitivity();
   }else{
     state.sensitivity=data.output;
@@ -55,6 +78,12 @@ worker.onerror=event=>{$('load-status').hidden=false;$('load-status').textConten
 
 function conditionStatus(stats){
   const b=state.main.result.baseline,k=state.config.objective;
+  if(modelObjectives.has(k)){
+    const mv=state.main.meanVariance,m=computeModelMetrics(state.w,mv.model);
+    if(k==='tangency')return{pass:!!state.optimal,text:state.optimal?`固定截距评分 ${fmt(m.slope)}（不是历史夏普）`:'当前假设下没有正风险溢价切点'};
+    if(k==='utility')return{pass:true,text:`收益减风险惩罚 ${pct(m.expectedReturn-mv.settings.gamma*m.modelVariance/2)}`};
+    const pass=m.modelVol<=mv.settings.targetVol+1e-8;return{pass,text:`${pass?'满足':'超过'}波动上限 ${pct(mv.settings.targetVol)}`};
+  }
   if(k==='max_sharpe')return{pass:true,text:'不设标普收益或夏普约束'};
   const eq=k.endsWith('equal'),isS=k.startsWith('sharpe');
   const gap=isS?stats.sharpe-b.sharpe:stats.cagr-b.cagr;
@@ -74,8 +103,30 @@ function setWeights(w,announce=false){
   const constraint=conditionStatus(state.stats);$('constraint-status').textContent=constraint.text;$('constraint-status').classList.toggle('fail',!constraint.pass);
   const candidates={optimal:state.optimal?.w,sp500:[0,1,0],ndx:[1,0,0],bond:[0,0,1]};
   document.querySelectorAll('[data-preset]').forEach(button=>{const candidate=candidates[button.dataset.preset];const active=candidate&&candidate.every((v,i)=>Math.abs(v-state.w[i])<1e-8);button.classList.toggle('active',!!active);button.setAttribute('aria-pressed',String(!!active));});
+  document.querySelector('[data-preset="optimal"]').disabled=!state.optimal;
   $('selection-note').textContent=`当前：纳指 ${shown[0]}% / 标普 ${shown[1]}% / 美债 ${shown[2]}% · CAGR ${pct(state.stats.cagr)} · 夏普 ${fmt(state.stats.sharpe)}`;
-  renderComparison();updateMarkers();
+  renderComparison();updateModelSummary(announce);updateMarkers();
+}
+function updateModelSummary(announce=false){
+  const mv=state.main.meanVariance,c=state.config,m=computeModelMetrics(state.w,mv.model);
+  $('model-selected').setAttribute('aria-live',announce?'polite':'off');
+  $('model-selected').textContent=`当前配置模型估计：年化预期收益 ${pct(m.expectedReturn)} · 年化总波动 ${pct(m.modelVol)}${c.objective==='tangency'?` · ${c.anchorSource==='custom'?'门槛调整':'固定利率'}评分 ${fmt(m.slope)}`:''}`;
+  let title='均值—方差有效前沿',line='仅显示当前选点',explanation='当前选择的是历史对标目标，星号按实际CAGR或历史夏普选取，不保证位于本图的算术均值—方差有效前沿。';
+  if(c.objective==='tangency'){
+    title='有效前沿与切点组合';line=c.anchorSource==='custom'?'┄ 门槛调整参考线':'┄ 固定利率切线参考';
+    explanation=mv.tangency?`从固定截距 ${pct(mv.model.anchorRate)} 出发，寻找单位总波动的超额预期收益最大点。短债只作图线截距，没有加入实际持仓；线上的现金混合和融资点不属于这组三资产配置。`:`三项资产的最高预期收益 ${pct(Math.max(...mv.model.expectedReturns))} 不高于截距 ${pct(mv.model.anchorRate)}，没有正风险溢价切点。保留当前手动配置供比较。`;
+    if(mv.tangencyStatus==='unbounded-zero-variance-premium')explanation='样本模型存在正溢价且零方差的组合，有限切点评分无定义；请检查数据或收益假设。';
+  }else if(c.objective==='utility'){
+    title='有效前沿与风险偏好';line='┄ 等效用曲线';explanation=`最大化 μ−λσ²/2，当前 λ=${mv.settings.gamma.toFixed(1)}。提高λ会更重视低波动；不需要改变无风险利率，也不强制达到标普收益。`;
+  }else if(c.objective==='risk_budget'){
+    title='有效前沿与风险预算';line='┄ 波动率上限';explanation=mv.riskBudget?`在年化波动不超过 ${pct(mv.settings.targetVol)} 的条件下，使算术预期收益最高。${mv.riskBudget.binding?'当前上限构成有效约束。':'最高预期收益组合已经在上限内，不需要用满风险额度。'}`:`上限 ${pct(mv.settings.targetVol)} 低于这组三资产的最小可行波动 ${pct(mv.gmv.modelVol)}，不存在满足条件的配置。保留手动配置供比较。`;
+  }
+  if(modelObjectives.has(c.objective)&&state.optimal&&Math.max(...state.optimal.w)>1-1e-8)explanation+=' 本组假设下最优点确实落在单一资产角点，未人为强制分散。';
+  $('model-title').textContent=title;$('model-line-key').textContent=line;$('model-explanation').textContent=explanation;
+}
+function showModelTooltip(event,point){
+  const stats=portfolioStats(state.main.rows,point.weights);showTooltip(event,point.weights,stats);
+  tooltip.querySelector('span').textContent=`预期收益 ${pct(point.expectedReturn)} · 总波动 ${pct(point.modelVol)} · 历史CAGR ${pct(stats.cagr)}`;
 }
 function showTooltip(event,w,stats){
   const shown=displayWeights(w);tooltip.innerHTML=`<b>纳指 ${shown[0]}% / 标普 ${shown[1]}% / 美债 ${shown[2]}%</b><span>CAGR ${pct(stats.cagr)} · 夏普 ${fmt(stats.sharpe)}</span>`;tooltip.hidden=false;
@@ -83,7 +134,7 @@ function showTooltip(event,w,stats){
 }
 function hideTooltip(){tooltip.hidden=true;}
 function renderComparison(){
-  const r=state.main.result,items=[['当前配置',{w:state.w,...state.stats},'current'],['当前目标最优',state.optimal,'highlight'],['无约束最高夏普',r.solutions.maxSharpe,''],['100% 标普500',r.baseline,''],['100% 纳斯达克100',{w:[1,0,0],...portfolioStats(state.main.rows,[1,0,0])},''],['100% 10年期美债',{w:[0,0,1],...portfolioStats(state.main.rows,[0,0,1])},'']];
+  const r=state.main.result,items=[['当前配置',{w:state.w,...state.stats},'current'],['当前目标最优',state.optimal,'highlight'],['切点参考组合',r.solutions.tangency,''],['历史最高夏普',r.solutions.maxSharpe,''],['100% 标普500',r.baseline,''],['100% 纳斯达克100',{w:[1,0,0],...portfolioStats(state.main.rows,[1,0,0])},''],['100% 10年期美债',{w:[0,0,1],...portfolioStats(state.main.rows,[0,0,1])},'']];
   $('comparison-body').innerHTML=items.filter(d=>d[1]).map(([label,s,cls])=>`<tr class="${cls}"><td>${label}</td><td>${displayWeights(s.w).join(' / ')}%</td><td>${pct(s.cagr)}</td><td>${fmt(s.sharpe)}</td><td>${pct(s.vol)}</td><td>${pct(s.mdd)}</td></tr>`).join('');
 }
 function pathTriangle(coords){return 'M'+coords.map(p=>p.join(',')).join('L')+'Z';}
@@ -157,6 +208,7 @@ function drawFrontier(){
   chartRefs.frontier={current,x,y};
 }
 function updateMarkers(){
+  chartRefs.model?.updateSelection(state.w);
   for(const metric of ['cagr','sharpe'])if(chartRefs[metric]){const c=chartRefs[metric],[x,y]=c.point(state.w);c.current.attr('cx',x).attr('cy',y);c.currentInner.attr('cx',x).attr('cy',y);}
   if(chartRefs.frontier){const c=chartRefs.frontier;c.current.attr('cx',c.x(state.stats.cagr)).attr('cy',c.y(state.stats.sharpe));}
 }
@@ -180,11 +232,13 @@ function renderSensitivityTable(){
   const body=$('sensitivity-body');body.innerHTML=state.sensitivity.map((p,i)=>`<tr><td><button type="button" class="period-link" data-row="${i}">${p.start} → ${p.end}</button></td>${p.optimal?`<td>${displayWeights(p.optimal.w).join(' / ')}%</td><td>${pct(p.optimal.cagr)}</td><td>${pct(p.baseline.cagr)}</td><td>${fmt(p.optimal.sharpe)}</td><td>${fmt(p.baseline.sharpe)}</td>`:'<td colspan="5">未找到可行解</td>'}</tr>`).join('');
   body.querySelectorAll('[data-row]').forEach(button=>button.addEventListener('click',()=>selectPeriod(state.sensitivity[Number(button.dataset.row)])));
 }
-function redraw(){if(!state.main)return;drawSurface('cagr');drawSurface('sharpe');drawFrontier();updateMarkers();drawSensitivity();}
+function redraw(){if(!state.main)return;chartRefs.model=drawMeanVarianceChart($('model-chart'),{meanVariance:state.main.meanVariance,grid:state.main.grid,objective:state.config.objective,optimal:state.optimal,config:state.config,w:state.w,onSelect:w=>setWeights(w,true),onHover:showModelTooltip,onLeave:hideTooltip});drawSurface('cagr');drawSurface('sharpe');drawFrontier();updateMarkers();drawSensitivity();}
 for(let i=0;i<3;i++){$(`weight-${i}`).addEventListener('input',event=>{if(state.main)setWeights(adjustWeight(state.w,i,Number(event.target.value)/100));});$(`weight-${i}`).addEventListener('change',()=>{if(state.main)setWeights(state.w,true);});}
 document.querySelectorAll('[data-preset]').forEach(button=>button.addEventListener('click',()=>{if(!state.main)return;const w={optimal:state.optimal?.w,sp500:[0,1,0],ndx:[1,0,0],bond:[0,0,1]}[button.dataset.preset];if(w)setWeights(w,true);}));
 document.querySelectorAll('[data-period]').forEach(button=>button.addEventListener('click',()=>{const p=button.dataset.period;if(p==='1985'){$('start-month').value='1985-01';$('equity-income').checked=false;}else if(p==='1999'){$('start-month').value='1999-03';$('equity-income').checked=true;}else $('start-month').value=p+'-01';$('end-month').value='2025-12';$('start-month').min=$('equity-income').checked?'1999-03':'1985-01';requestMain();}));
 for(const id of ['start-month','end-month','objective','bond-income'])$(id).addEventListener('change',requestMain);
+for(const id of ['expected-source','expected-0','expected-1','expected-2','anchor-source','anchor-rate','budget-source','target-vol'])$(id).addEventListener('change',requestMain);
+let gammaTimer;$('risk-gamma').addEventListener('input',()=>{updateControlVisibility();clearTimeout(gammaTimer);gammaTimer=setTimeout(requestMain,140);});$('risk-gamma').addEventListener('change',()=>{clearTimeout(gammaTimer);requestMain();});
 $('equity-income').addEventListener('change',()=>{const minimum=$('equity-income').checked?'1999-03':'1985-01';$('start-month').min=minimum;if($('start-month').value<minimum)$('start-month').value=minimum;requestMain();});
 $('sensitivity-mode').addEventListener('change',()=>{$('window-years').disabled=$('sensitivity-mode').value!=='rolling';requestSensitivity();});$('window-years').addEventListener('change',requestSensitivity);
 let resizeTimer,lastWidth=0;const observer=new ResizeObserver(entries=>{const width=entries[0].contentRect.width;if(Math.abs(width-lastWidth)<1)return;lastWidth=width;clearTimeout(resizeTimer);resizeTimer=setTimeout(redraw,100);});observer.observe(document.querySelector('main'));
