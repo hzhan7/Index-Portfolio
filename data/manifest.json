@@ -1,0 +1,26 @@
+{
+  "retrieved": "2026-09-11",
+  "data_through": "2025-12-31",
+  "files": [
+    {
+      "path": "data/sources/sp500_treasury_monthly.csv",
+      "bytes": 124349,
+      "sha256": "7257c9e32e3f7f707072a31d0c66ea795b032d943acca8695c640d4f127c77b6"
+    },
+    {
+      "path": "data/sources/nasdaq_monthly.csv",
+      "bytes": 39673,
+      "sha256": "f4946560930fcc245824c8292c15594e8777e6ab75eaa479d515964dfd81e0be"
+    },
+    {
+      "path": "docs/data/history.json",
+      "bytes": 156368,
+      "sha256": "1450ffed20e5ca0ae8e2c8d6f2d1f8c95240d11128fdd13b34ed2ebb6a1a57ad"
+    },
+    {
+      "path": "docs/data/monthly_history.csv",
+      "bytes": 95628,
+      "sha256": "d83090329b94ef36f7a0ab8c0614faf6441696b5ee79f94a716c987cdffded30"
+    }
+  ]
+}

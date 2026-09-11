@@ -1,0 +1,1 @@
+{"name":"index-portfolio","private":true,"type":"module","scripts":{"check":"node --check docs/assets/app.js && node --check docs/assets/math.js && node --check docs/assets/worker.js && node --check docs/assets/optimizer.js","test":"node --test tests/math.test.js"}}

@@ -1,0 +1,906 @@
+{
+  "schemaVersion": 1,
+  "inputSha256": "1450ffed20e5ca0ae8e2c8d6f2d1f8c95240d11128fdd13b34ed2ebb6a1a57ad",
+  "cases": [
+    {
+      "id": "1985_2025_stock_PR_bond_TR",
+      "schemaVersion": 1,
+      "parameters": {
+        "start": "1985-01",
+        "end": "2025-12",
+        "stocksIncome": false,
+        "bondIncome": true,
+        "objective": "all"
+      },
+      "source": {
+        "inputFile": "docs/data/history.json",
+        "asOf": "2025-12-31",
+        "retrieved": "2026-09-11"
+      },
+      "period": {
+        "startWealthMonth": "1985-01",
+        "endWealthMonth": "2025-12",
+        "firstReturnMonth": "1985-02",
+        "lastReturnMonth": "2025-12",
+        "nMonths": 491,
+        "years": 40.916666666666664,
+        "startExcludedFromReturnRows": true
+      },
+      "returnFields": [
+        "ndx_pr",
+        "spx_pr",
+        "bond_tr",
+        "RF"
+      ],
+      "assetOrder": [
+        "NDX",
+        "SPX",
+        "BOND"
+      ],
+      "baseline": {
+        "w": [
+          0,
+          1,
+          0
+        ],
+        "cagr": 0.09305031589061691,
+        "sharpe": 0.45986645122972536,
+        "vol": 0.15084866134786837,
+        "excessVol": 0.15080035385323726,
+        "mdd": -0.5255586105409906,
+        "wealthMultiple": 38.108890497132975,
+        "mddPeakIndex": 272,
+        "mddTroughIndex": 288,
+        "mddRecoveryIndex": 337,
+        "mddPeakMonth": "2007-10",
+        "mddTroughMonth": "2009-02",
+        "mddRecoveryMonth": "2013-03"
+      },
+      "solutions": {
+        "maxSharpe": {
+          "w": [
+            0.30470590210682985,
+            0,
+            0.6952940978931701
+          ],
+          "cagr": 0.09052385319848247,
+          "sharpe": 0.6815381504331466,
+          "vol": 0.08736316431398644,
+          "excessVol": 0.08694121379748458,
+          "mdd": -0.21975072425599929,
+          "wealthMultiple": 34.666155571868366,
+          "mddPeakIndex": 186,
+          "mddTroughIndex": 209,
+          "mddRecoveryIndex": 238,
+          "cagrGapVsSpx": -0.00252646269213444,
+          "sharpeGapVsSpx": 0.22167169920342122,
+          "mddPeakMonth": "2000-08",
+          "mddTroughMonth": "2002-07",
+          "mddRecoveryMonth": "2004-12"
+        },
+        "maxSharpeAtLeastSpxCagr": {
+          "w": [
+            0.33263453273071203,
+            0,
+            0.6673654672692879
+          ],
+          "cagr": 0.09305031589062747,
+          "sharpe": 0.6802206547121643,
+          "vol": 0.09145132456760931,
+          "excessVol": 0.09107041371031262,
+          "mdd": -0.25229239856637853,
+          "wealthMultiple": 38.10889049714791,
+          "mddPeakIndex": 186,
+          "mddTroughIndex": 209,
+          "mddRecoveryIndex": 246,
+          "cagrGapVsSpx": 1.0560996521746802e-14,
+          "sharpeGapVsSpx": 0.22035420348243895,
+          "mddPeakMonth": "2000-08",
+          "mddTroughMonth": "2002-07",
+          "mddRecoveryMonth": "2005-08"
+        },
+        "maxCagrAtLeastSpxSharpe": {
+          "w": [
+            0.9999999999969215,
+            3.0785374249830966e-12,
+            0
+          ],
+          "cagr": 0.1385249050668384,
+          "sharpe": 0.5425649580233396,
+          "vol": 0.2327766499460264,
+          "excessVol": 0.2328338094343749,
+          "mdd": -0.8106979790071861,
+          "wealthMultiple": 201.99877292844707,
+          "mddPeakIndex": 181,
+          "mddTroughIndex": 211,
+          "mddRecoveryIndex": 360,
+          "cagrGapVsSpx": 0.04547458917622149,
+          "sharpeGapVsSpx": 0.08269850679361423,
+          "mddPeakMonth": "2000-03",
+          "mddTroughMonth": "2002-09",
+          "mddRecoveryMonth": "2015-02"
+        },
+        "equalSpxCagr": {
+          "w": [
+            0.3326345327306715,
+            0,
+            0.6673654672693285
+          ],
+          "cagr": 0.09305031589062379,
+          "sharpe": 0.6802206547121681,
+          "vol": 0.09145132456760313,
+          "excessVol": 0.0910704137103064,
+          "mdd": -0.252292398566332,
+          "wealthMultiple": 38.108890497142745,
+          "mddPeakIndex": 186,
+          "mddTroughIndex": 209,
+          "mddRecoveryIndex": 246,
+          "cagrGapVsSpx": 6.8833827526759706e-15,
+          "sharpeGapVsSpx": 0.22035420348244272,
+          "mddPeakMonth": "2000-08",
+          "mddTroughMonth": "2002-07",
+          "mddRecoveryMonth": "2005-08"
+        },
+        "equalSpxSharpe": {
+          "w": [
+            0,
+            1,
+            0
+          ],
+          "cagr": 0.09305031589061691,
+          "sharpe": 0.45986645122972536,
+          "vol": 0.15084866134786837,
+          "excessVol": 0.15080035385323726,
+          "mdd": -0.5255586105409906,
+          "wealthMultiple": 38.108890497132975,
+          "mddPeakIndex": 272,
+          "mddTroughIndex": 288,
+          "mddRecoveryIndex": 337,
+          "cagrGapVsSpx": 0,
+          "sharpeGapVsSpx": 0,
+          "mddPeakMonth": "2007-10",
+          "mddTroughMonth": "2009-02",
+          "mddRecoveryMonth": "2013-03"
+        }
+      },
+      "method": "Conditional analytical Sharpe roots and concave log-growth bisection; outer scan with multiple continuous refinements. Numerical search, not strict global certification.",
+      "assumptions": [
+        "Long only; weights sum to 1; monthly rebalancing.",
+        "CAGR = exp(12 * mean(log(1 + monthly return))) - 1.",
+        "Sharpe = sqrt(12) * mean(monthly return - RF) / sample_std(monthly return - RF), ddof=1.",
+        "Volatility is annualized raw monthly-return sample standard deviation.",
+        "Drawdown uses month-end wealth including initial wealth 1; not daily drawdown.",
+        "Historical sample is optimized retrospectively; excludes trading costs, taxes and fees."
+      ],
+      "diagnostics": {
+        "scanSteps": 128,
+        "refineIterations": 52,
+        "maxRefinements": 10,
+        "profileCalls": 975,
+        "cagrEqualityTolerance": 1e-9,
+        "sharpeEqualityTolerance": 3e-9,
+        "elapsedMs": 22.964499999999997
+      }
+    },
+    {
+      "id": "1999_2025_stock_TR_bond_TR",
+      "schemaVersion": 1,
+      "parameters": {
+        "start": "1999-03",
+        "end": "2025-12",
+        "stocksIncome": true,
+        "bondIncome": true,
+        "objective": "all"
+      },
+      "source": {
+        "inputFile": "docs/data/history.json",
+        "asOf": "2025-12-31",
+        "retrieved": "2026-09-11"
+      },
+      "period": {
+        "startWealthMonth": "1999-03",
+        "endWealthMonth": "2025-12",
+        "firstReturnMonth": "1999-04",
+        "lastReturnMonth": "2025-12",
+        "nMonths": 321,
+        "years": 26.75,
+        "startExcludedFromReturnRows": true
+      },
+      "returnFields": [
+        "ndx_tr",
+        "spx_tr",
+        "bond_tr",
+        "RF"
+      ],
+      "assetOrder": [
+        "NDX",
+        "SPX",
+        "BOND"
+      ],
+      "baseline": {
+        "w": [
+          0,
+          1,
+          0
+        ],
+        "cagr": 0.08414559532810809,
+        "sharpe": 0.48338789805127336,
+        "vol": 0.15114931047464902,
+        "excessVol": 0.15145363349332497,
+        "mdd": -0.5094876575395024,
+        "wealthMultiple": 8.681475807233594,
+        "mddPeakIndex": 102,
+        "mddTroughIndex": 118,
+        "mddRecoveryIndex": 155,
+        "mddPeakMonth": "2007-10",
+        "mddTroughMonth": "2009-02",
+        "mddRecoveryMonth": "2012-03"
+      },
+      "solutions": {
+        "maxSharpe": {
+          "w": [
+            0.1300647730039383,
+            0.27901741767327676,
+            0.5909178093227849
+          ],
+          "cagr": 0.0642094239591868,
+          "sharpe": 0.6054200229141397,
+          "vol": 0.07557417614679805,
+          "excessVol": 0.07580226087231538,
+          "mdd": -0.20714057015143506,
+          "wealthMultiple": 5.284147559758005,
+          "mddPeakIndex": 272,
+          "mddTroughIndex": 281,
+          "mddRecoveryIndex": 303,
+          "cagrGapVsSpx": -0.019936171368921285,
+          "sharpeGapVsSpx": 0.1220321248628663,
+          "mddPeakMonth": "2021-12",
+          "mddTroughMonth": "2022-09",
+          "mddRecoveryMonth": "2024-07"
+        },
+        "maxSharpeAtLeastSpxCagr": {
+          "w": [
+            0.4044938762411243,
+            0.26915329136637695,
+            0.32635283239249885
+          ],
+          "cagr": 0.08414559532810827,
+          "sharpe": 0.5442673544734633,
+          "vol": 0.12819641627440367,
+          "excessVol": 0.1285132388068115,
+          "mdd": -0.4834932466171201,
+          "wealthMultiple": 8.681475807233632,
+          "mddPeakIndex": 11,
+          "mddTroughIndex": 41,
+          "mddRecoveryIndex": 102,
+          "cagrGapVsSpx": 1.8041124150158794e-16,
+          "sharpeGapVsSpx": 0.06087945642218995,
+          "mddPeakMonth": "2000-03",
+          "mddTroughMonth": "2002-09",
+          "mddRecoveryMonth": "2007-10"
+        },
+        "maxCagrAtLeastSpxSharpe": {
+          "w": [
+            0.7261958559314801,
+            0.25719080719509546,
+            0.016613336873424478
+          ],
+          "cagr": 0.10112651528392178,
+          "sharpe": 0.4833878980512734,
+          "vol": 0.2026498636749329,
+          "excessVol": 0.20298552041806506,
+          "mdd": -0.7334038667886529,
+          "wealthMultiple": 13.156660012674639,
+          "mddPeakIndex": 11,
+          "mddTroughIndex": 41,
+          "mddRecoveryIndex": 174,
+          "cagrGapVsSpx": 0.01698091995581369,
+          "sharpeGapVsSpx": 5.551115123125783e-17,
+          "mddPeakMonth": "2000-03",
+          "mddTroughMonth": "2002-09",
+          "mddRecoveryMonth": "2013-10"
+        },
+        "equalSpxCagr": {
+          "w": [
+            0.4044938762411243,
+            0.26915329136637695,
+            0.32635283239249885
+          ],
+          "cagr": 0.08414559532810827,
+          "sharpe": 0.5442673544734633,
+          "vol": 0.12819641627440367,
+          "excessVol": 0.1285132388068115,
+          "mdd": -0.4834932466171201,
+          "wealthMultiple": 8.681475807233632,
+          "mddPeakIndex": 11,
+          "mddTroughIndex": 41,
+          "mddRecoveryIndex": 102,
+          "cagrGapVsSpx": 1.8041124150158794e-16,
+          "sharpeGapVsSpx": 0.06087945642218995,
+          "mddPeakMonth": "2000-03",
+          "mddTroughMonth": "2002-09",
+          "mddRecoveryMonth": "2007-10"
+        },
+        "equalSpxSharpe": {
+          "w": [
+            0.7261958559314801,
+            0.25719080719509546,
+            0.016613336873424478
+          ],
+          "cagr": 0.10112651528392178,
+          "sharpe": 0.4833878980512734,
+          "vol": 0.2026498636749329,
+          "excessVol": 0.20298552041806506,
+          "mdd": -0.7334038667886529,
+          "wealthMultiple": 13.156660012674639,
+          "mddPeakIndex": 11,
+          "mddTroughIndex": 41,
+          "mddRecoveryIndex": 174,
+          "cagrGapVsSpx": 0.01698091995581369,
+          "sharpeGapVsSpx": 5.551115123125783e-17,
+          "mddPeakMonth": "2000-03",
+          "mddTroughMonth": "2002-09",
+          "mddRecoveryMonth": "2013-10"
+        }
+      },
+      "method": "Conditional analytical Sharpe roots and concave log-growth bisection; outer scan with multiple continuous refinements. Numerical search, not strict global certification.",
+      "assumptions": [
+        "Long only; weights sum to 1; monthly rebalancing.",
+        "CAGR = exp(12 * mean(log(1 + monthly return))) - 1.",
+        "Sharpe = sqrt(12) * mean(monthly return - RF) / sample_std(monthly return - RF), ddof=1.",
+        "Volatility is annualized raw monthly-return sample standard deviation.",
+        "Drawdown uses month-end wealth including initial wealth 1; not daily drawdown.",
+        "Historical sample is optimized retrospectively; excludes trading costs, taxes and fees."
+      ],
+      "diagnostics": {
+        "scanSteps": 128,
+        "refineIterations": 52,
+        "maxRefinements": 10,
+        "profileCalls": 1030,
+        "cagrEqualityTolerance": 1e-9,
+        "sharpeEqualityTolerance": 3e-9,
+        "elapsedMs": 19.553166999999995
+      }
+    },
+    {
+      "id": "2000_2009_stock_TR_bond_TR",
+      "schemaVersion": 1,
+      "parameters": {
+        "start": "2000-01",
+        "end": "2009-12",
+        "stocksIncome": true,
+        "bondIncome": true,
+        "objective": "all"
+      },
+      "source": {
+        "inputFile": "docs/data/history.json",
+        "asOf": "2025-12-31",
+        "retrieved": "2026-09-11"
+      },
+      "period": {
+        "startWealthMonth": "2000-01",
+        "endWealthMonth": "2009-12",
+        "firstReturnMonth": "2000-02",
+        "lastReturnMonth": "2009-12",
+        "nMonths": 119,
+        "years": 9.916666666666666,
+        "startExcludedFromReturnRows": true
+      },
+      "returnFields": [
+        "ndx_tr",
+        "spx_tr",
+        "bond_tr",
+        "RF"
+      ],
+      "assetOrder": [
+        "NDX",
+        "SPX",
+        "BOND"
+      ],
+      "baseline": {
+        "w": [
+          0,
+          1,
+          0
+        ],
+        "cagr": -0.0044106708956711226,
+        "sharpe": -0.11317522266554794,
+        "vol": 0.16121131366800825,
+        "excessVol": 0.16146534468103307,
+        "mdd": -0.5094876575395024,
+        "wealthMultiple": 0.95711100925077,
+        "mddPeakIndex": 92,
+        "mddTroughIndex": 108,
+        "mddRecoveryIndex": null,
+        "mddPeakMonth": "2007-10",
+        "mddTroughMonth": "2009-02",
+        "mddRecoveryMonth": null
+      },
+      "solutions": {
+        "maxSharpe": {
+          "w": [
+            1.715617144595622e-13,
+            0.012597309032911857,
+            0.9874026909669166
+          ],
+          "cagr": 0.06613445483794236,
+          "sharpe": 0.4993086467927102,
+          "vol": 0.0813988567843811,
+          "excessVol": 0.08104931263714968,
+          "mdd": -0.09666279166183522,
+          "wealthMultiple": 1.8871313270569887,
+          "mddPeakIndex": 106,
+          "mddTroughIndex": 118,
+          "mddRecoveryIndex": null,
+          "cagrGapVsSpx": 0.07054512573361349,
+          "sharpeGapVsSpx": 0.6124838694582582,
+          "mddPeakMonth": "2008-12",
+          "mddTroughMonth": "2009-12",
+          "mddRecoveryMonth": null
+        },
+        "maxSharpeAtLeastSpxCagr": {
+          "w": [
+            1.715617144595622e-13,
+            0.012597309032911857,
+            0.9874026909669166
+          ],
+          "cagr": 0.06613445483794236,
+          "sharpe": 0.4993086467927102,
+          "vol": 0.0813988567843811,
+          "excessVol": 0.08104931263714968,
+          "mdd": -0.09666279166183522,
+          "wealthMultiple": 1.8871313270569887,
+          "mddPeakIndex": 106,
+          "mddTroughIndex": 118,
+          "mddRecoveryIndex": null,
+          "cagrGapVsSpx": 0.07054512573361349,
+          "sharpeGapVsSpx": 0.6124838694582582,
+          "mddPeakMonth": "2008-12",
+          "mddTroughMonth": "2009-12",
+          "mddRecoveryMonth": null
+        },
+        "maxCagrAtLeastSpxSharpe": {
+          "w": [
+            0,
+            0,
+            1
+          ],
+          "cagr": 0.0667982258913749,
+          "sharpe": 0.4991612360029137,
+          "vol": 0.08292843123947428,
+          "excessVol": 0.08257464314575273,
+          "mdd": -0.10081819419562954,
+          "wealthMultiple": 1.8988150154532997,
+          "mddPeakIndex": 106,
+          "mddTroughIndex": 118,
+          "mddRecoveryIndex": null,
+          "cagrGapVsSpx": 0.07120889678704602,
+          "sharpeGapVsSpx": 0.6123364586684616,
+          "mddPeakMonth": "2008-12",
+          "mddTroughMonth": "2009-12",
+          "mddRecoveryMonth": null
+        },
+        "equalSpxCagr": {
+          "w": [
+            0.6472916269083755,
+            0,
+            0.3527083730916245
+          ],
+          "cagr": -0.004410670893282185,
+          "sharpe": -0.07699919689173164,
+          "vol": 0.18468335424288193,
+          "excessVol": 0.18536939537365316,
+          "mdd": -0.5886284416341075,
+          "wealthMultiple": 0.9571110092735438,
+          "mddPeakIndex": 1,
+          "mddTroughIndex": 31,
+          "mddRecoveryIndex": null,
+          "cagrGapVsSpx": 2.3889371383867264e-12,
+          "sharpeGapVsSpx": 0.0361760257738163,
+          "mddPeakMonth": "2000-03",
+          "mddTroughMonth": "2002-09",
+          "mddRecoveryMonth": null
+        },
+        "equalSpxSharpe": {
+          "w": [
+            2.3518029688209045e-12,
+            0.9999999999966172,
+            1.0310641229693829e-12
+          ],
+          "cagr": -0.004410670895671239,
+          "sharpe": -0.11317522266554782,
+          "vol": 0.1612113136680096,
+          "excessVol": 0.16146534468103646,
+          "mdd": -0.5094876575389862,
+          "wealthMultiple": 0.9571110092507698,
+          "mddPeakIndex": 92,
+          "mddTroughIndex": 108,
+          "mddRecoveryIndex": null,
+          "cagrGapVsSpx": -1.1622647289044608e-16,
+          "sharpeGapVsSpx": 1.249000902703301e-16,
+          "mddPeakMonth": "2007-10",
+          "mddTroughMonth": "2009-02",
+          "mddRecoveryMonth": null
+        }
+      },
+      "method": "Conditional analytical Sharpe roots and concave log-growth bisection; outer scan with multiple continuous refinements. Numerical search, not strict global certification.",
+      "assumptions": [
+        "Long only; weights sum to 1; monthly rebalancing.",
+        "CAGR = exp(12 * mean(log(1 + monthly return))) - 1.",
+        "Sharpe = sqrt(12) * mean(monthly return - RF) / sample_std(monthly return - RF), ddof=1.",
+        "Volatility is annualized raw monthly-return sample standard deviation.",
+        "Drawdown uses month-end wealth including initial wealth 1; not daily drawdown.",
+        "Historical sample is optimized retrospectively; excludes trading costs, taxes and fees."
+      ],
+      "diagnostics": {
+        "scanSteps": 128,
+        "refineIterations": 52,
+        "maxRefinements": 10,
+        "profileCalls": 920,
+        "cagrEqualityTolerance": 1e-9,
+        "sharpeEqualityTolerance": 3e-9,
+        "elapsedMs": 7.937709000000005
+      }
+    },
+    {
+      "id": "2015_2025_stock_TR_bond_TR",
+      "schemaVersion": 1,
+      "parameters": {
+        "start": "2015-12",
+        "end": "2025-12",
+        "stocksIncome": true,
+        "bondIncome": true,
+        "objective": "all"
+      },
+      "source": {
+        "inputFile": "docs/data/history.json",
+        "asOf": "2025-12-31",
+        "retrieved": "2026-09-11"
+      },
+      "period": {
+        "startWealthMonth": "2015-12",
+        "endWealthMonth": "2025-12",
+        "firstReturnMonth": "2016-01",
+        "lastReturnMonth": "2025-12",
+        "nMonths": 120,
+        "years": 10,
+        "startExcludedFromReturnRows": true
+      },
+      "returnFields": [
+        "ndx_tr",
+        "spx_tr",
+        "bond_tr",
+        "RF"
+      ],
+      "assetOrder": [
+        "NDX",
+        "SPX",
+        "BOND"
+      ],
+      "baseline": {
+        "w": [
+          0,
+          1,
+          0
+        ],
+        "cagr": 0.14820180666220972,
+        "sharpe": 0.8567258319393783,
+        "vol": 0.15117692570542,
+        "excessVol": 0.1511309814844361,
+        "mdd": -0.23867344090293208,
+        "wealthMultiple": 3.982742778345646,
+        "mddPeakIndex": 71,
+        "mddTroughIndex": 80,
+        "mddRecoveryIndex": 95,
+        "mddPeakMonth": "2021-12",
+        "mddTroughMonth": "2022-09",
+        "mddRecoveryMonth": "2023-12"
+      },
+      "solutions": {
+        "maxSharpe": {
+          "w": [
+            1,
+            0,
+            0
+          ],
+          "cagr": 0.19698042623047046,
+          "sharpe": 0.9625091003609193,
+          "vol": 0.18407230664906246,
+          "excessVol": 0.18392266590187725,
+          "mdd": -0.32383125351153685,
+          "wealthMultiple": 6.037685486246166,
+          "mddPeakIndex": 71,
+          "mddTroughIndex": 83,
+          "mddRecoveryIndex": 95,
+          "cagrGapVsSpx": 0.04877861956826074,
+          "sharpeGapVsSpx": 0.10578326842154095,
+          "mddPeakMonth": "2021-12",
+          "mddTroughMonth": "2022-12",
+          "mddRecoveryMonth": "2023-12"
+        },
+        "maxSharpeAtLeastSpxCagr": {
+          "w": [
+            1,
+            0,
+            0
+          ],
+          "cagr": 0.19698042623047046,
+          "sharpe": 0.9625091003609193,
+          "vol": 0.18407230664906246,
+          "excessVol": 0.18392266590187725,
+          "mdd": -0.32383125351153685,
+          "wealthMultiple": 6.037685486246166,
+          "mddPeakIndex": 71,
+          "mddTroughIndex": 83,
+          "mddRecoveryIndex": 95,
+          "cagrGapVsSpx": 0.04877861956826074,
+          "sharpeGapVsSpx": 0.10578326842154095,
+          "mddPeakMonth": "2021-12",
+          "mddTroughMonth": "2022-12",
+          "mddRecoveryMonth": "2023-12"
+        },
+        "maxCagrAtLeastSpxSharpe": {
+          "w": [
+            1,
+            0,
+            0
+          ],
+          "cagr": 0.19698042623047046,
+          "sharpe": 0.9625091003609193,
+          "vol": 0.18407230664906246,
+          "excessVol": 0.18392266590187725,
+          "mdd": -0.32383125351153685,
+          "wealthMultiple": 6.037685486246166,
+          "mddPeakIndex": 71,
+          "mddTroughIndex": 83,
+          "mddRecoveryIndex": 95,
+          "cagrGapVsSpx": 0.04877861956826074,
+          "sharpeGapVsSpx": 0.10578326842154095,
+          "mddPeakMonth": "2021-12",
+          "mddTroughMonth": "2022-12",
+          "mddRecoveryMonth": "2023-12"
+        },
+        "equalSpxCagr": {
+          "w": [
+            0.5892038142447811,
+            0.19625942517467573,
+            0.2145367605805432
+          ],
+          "cagr": 0.14820180666220992,
+          "sharpe": 0.9133744121977064,
+          "vol": 0.14010871219142715,
+          "excessVol": 0.1399451027802811,
+          "mdd": -0.2737328658192477,
+          "wealthMultiple": 3.9827427783456573,
+          "mddPeakIndex": 71,
+          "mddTroughIndex": 80,
+          "mddRecoveryIndex": 95,
+          "cagrGapVsSpx": 1.942890293094024e-16,
+          "sharpeGapVsSpx": 0.056648580258328085,
+          "mddPeakMonth": "2021-12",
+          "mddTroughMonth": "2022-09",
+          "mddRecoveryMonth": "2023-12"
+        },
+        "equalSpxSharpe": {
+          "w": [
+            9.237731839560052e-9,
+            0.9999999907622682,
+            0
+          ],
+          "cagr": 0.14820180713406408,
+          "sharpe": 0.8567258339393696,
+          "vol": 0.15117692586652684,
+          "excessVol": 0.15113098164433347,
+          "mdd": -0.23867344171355076,
+          "wealthMultiple": 3.98274279471275,
+          "mddPeakIndex": 71,
+          "mddTroughIndex": 80,
+          "mddRecoveryIndex": 95,
+          "cagrGapVsSpx": 4.718543611392789e-10,
+          "sharpeGapVsSpx": 1.999991283696545e-9,
+          "mddPeakMonth": "2021-12",
+          "mddTroughMonth": "2022-09",
+          "mddRecoveryMonth": "2023-12"
+        }
+      },
+      "method": "Conditional analytical Sharpe roots and concave log-growth bisection; outer scan with multiple continuous refinements. Numerical search, not strict global certification.",
+      "assumptions": [
+        "Long only; weights sum to 1; monthly rebalancing.",
+        "CAGR = exp(12 * mean(log(1 + monthly return))) - 1.",
+        "Sharpe = sqrt(12) * mean(monthly return - RF) / sample_std(monthly return - RF), ddof=1.",
+        "Volatility is annualized raw monthly-return sample standard deviation.",
+        "Drawdown uses month-end wealth including initial wealth 1; not daily drawdown.",
+        "Historical sample is optimized retrospectively; excludes trading costs, taxes and fees."
+      ],
+      "diagnostics": {
+        "scanSteps": 128,
+        "refineIterations": 52,
+        "maxRefinements": 10,
+        "profileCalls": 975,
+        "cagrEqualityTolerance": 1e-9,
+        "sharpeEqualityTolerance": 3e-9,
+        "elapsedMs": 7.501833000000005
+      }
+    },
+    {
+      "id": "1985_2025_stock_PR_bond_PR",
+      "schemaVersion": 1,
+      "parameters": {
+        "start": "1985-01",
+        "end": "2025-12",
+        "stocksIncome": false,
+        "bondIncome": false,
+        "objective": "all"
+      },
+      "source": {
+        "inputFile": "docs/data/history.json",
+        "asOf": "2025-12-31",
+        "retrieved": "2026-09-11"
+      },
+      "period": {
+        "startWealthMonth": "1985-01",
+        "endWealthMonth": "2025-12",
+        "firstReturnMonth": "1985-02",
+        "lastReturnMonth": "2025-12",
+        "nMonths": 491,
+        "years": 40.916666666666664,
+        "startExcludedFromReturnRows": true
+      },
+      "returnFields": [
+        "ndx_pr",
+        "spx_pr",
+        "bond_pr",
+        "RF"
+      ],
+      "assetOrder": [
+        "NDX",
+        "SPX",
+        "BOND"
+      ],
+      "baseline": {
+        "w": [
+          0,
+          1,
+          0
+        ],
+        "cagr": 0.09305031589061691,
+        "sharpe": 0.45986645122972536,
+        "vol": 0.15084866134786837,
+        "excessVol": 0.15080035385323726,
+        "mdd": -0.5255586105409906,
+        "wealthMultiple": 38.108890497132975,
+        "mddPeakIndex": 272,
+        "mddTroughIndex": 288,
+        "mddRecoveryIndex": 337,
+        "mddPeakMonth": "2007-10",
+        "mddTroughMonth": "2009-02",
+        "mddRecoveryMonth": "2013-03"
+      },
+      "solutions": {
+        "maxSharpe": {
+          "w": [
+            0.9679695386617213,
+            0.03203046133827869,
+            0
+          ],
+          "cagr": 0.13735646279092825,
+          "sharpe": 0.542600064033682,
+          "vol": 0.22940004083128815,
+          "excessVol": 0.229455166826993,
+          "mdd": -0.8034040044891133,
+          "wealthMultiple": 193.68792190330427,
+          "mddPeakIndex": 181,
+          "mddTroughIndex": 211,
+          "mddRecoveryIndex": 357,
+          "cagrGapVsSpx": 0.044306146900311344,
+          "sharpeGapVsSpx": 0.08273361280395664,
+          "mddPeakMonth": "2000-03",
+          "mddTroughMonth": "2002-09",
+          "mddRecoveryMonth": "2014-11"
+        },
+        "maxSharpeAtLeastSpxCagr": {
+          "w": [
+            0.9679695386617213,
+            0.03203046133827869,
+            0
+          ],
+          "cagr": 0.13735646279092825,
+          "sharpe": 0.542600064033682,
+          "vol": 0.22940004083128815,
+          "excessVol": 0.229455166826993,
+          "mdd": -0.8034040044891133,
+          "wealthMultiple": 193.68792190330427,
+          "mddPeakIndex": 181,
+          "mddTroughIndex": 211,
+          "mddRecoveryIndex": 357,
+          "cagrGapVsSpx": 0.044306146900311344,
+          "sharpeGapVsSpx": 0.08273361280395664,
+          "mddPeakMonth": "2000-03",
+          "mddTroughMonth": "2002-09",
+          "mddRecoveryMonth": "2014-11"
+        },
+        "maxCagrAtLeastSpxSharpe": {
+          "w": [
+            0.9999999999969215,
+            3.0785374249830966e-12,
+            0
+          ],
+          "cagr": 0.1385249050668384,
+          "sharpe": 0.5425649580233396,
+          "vol": 0.2327766499460264,
+          "excessVol": 0.2328338094343749,
+          "mdd": -0.8106979790071861,
+          "wealthMultiple": 201.99877292844707,
+          "mddPeakIndex": 181,
+          "mddTroughIndex": 211,
+          "mddRecoveryIndex": 360,
+          "cagrGapVsSpx": 0.04547458917622149,
+          "sharpeGapVsSpx": 0.08269850679361423,
+          "mddPeakMonth": "2000-03",
+          "mddTroughMonth": "2002-09",
+          "mddRecoveryMonth": "2015-02"
+        },
+        "equalSpxCagr": {
+          "w": [
+            0.378811541541572,
+            0.3493795695721169,
+            0.27180888888631105
+          ],
+          "cagr": 0.0930503158906172,
+          "sharpe": 0.4914413672957987,
+          "vol": 0.13673223090542633,
+          "excessVol": 0.1367185747847781,
+          "mdd": -0.5211213054323125,
+          "wealthMultiple": 38.108890497133515,
+          "mddPeakIndex": 181,
+          "mddTroughIndex": 211,
+          "mddRecoveryIndex": 330,
+          "cagrGapVsSpx": 2.914335439641036e-16,
+          "sharpeGapVsSpx": 0.03157491606607332,
+          "mddPeakMonth": "2000-03",
+          "mddTroughMonth": "2002-09",
+          "mddRecoveryMonth": "2012-08"
+        },
+        "equalSpxSharpe": {
+          "w": [
+            8.323795658101e-9,
+            0.9999999916762043,
+            0
+          ],
+          "cagr": 0.09305031634324694,
+          "sharpe": 0.45986645322971303,
+          "vol": 0.15084866172212602,
+          "excessVol": 0.1508003542287515,
+          "mdd": -0.5255586102976326,
+          "wealthMultiple": 38.108891142831446,
+          "mddPeakIndex": 272,
+          "mddTroughIndex": 288,
+          "mddRecoveryIndex": 337,
+          "cagrGapVsSpx": 4.526300306784137e-10,
+          "sharpeGapVsSpx": 1.999987675471715e-9,
+          "mddPeakMonth": "2007-10",
+          "mddTroughMonth": "2009-02",
+          "mddRecoveryMonth": "2013-03"
+        }
+      },
+      "method": "Conditional analytical Sharpe roots and concave log-growth bisection; outer scan with multiple continuous refinements. Numerical search, not strict global certification.",
+      "assumptions": [
+        "Long only; weights sum to 1; monthly rebalancing.",
+        "CAGR = exp(12 * mean(log(1 + monthly return))) - 1.",
+        "Sharpe = sqrt(12) * mean(monthly return - RF) / sample_std(monthly return - RF), ddof=1.",
+        "Volatility is annualized raw monthly-return sample standard deviation.",
+        "Drawdown uses month-end wealth including initial wealth 1; not daily drawdown.",
+        "Historical sample is optimized retrospectively; excludes trading costs, taxes and fees."
+      ],
+      "diagnostics": {
+        "scanSteps": 128,
+        "refineIterations": 52,
+        "maxRefinements": 10,
+        "profileCalls": 975,
+        "cagrEqualityTolerance": 1e-9,
+        "sharpeEqualityTolerance": 3e-9,
+        "elapsedMs": 22.752375
+      }
+    }
+  ]
+}

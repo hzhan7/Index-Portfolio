@@ -1,0 +1,1151 @@
+{
+  "schemaVersion": 1,
+  "status": "passed",
+  "inputFile": "docs/data/history.json",
+  "inputSha256": "1450ffed20e5ca0ae8e2c8d6f2d1f8c95240d11128fdd13b34ed2ebb6a1a57ad",
+  "caseCount": 5,
+  "objectiveChecks": 25,
+  "method": "Independent SciPy SLSQP; 66 simplex starting points per objective; analytic gradients. Direct NumPy ddof=1 Sharpe/volatility and month-end MDD checks.",
+  "dateConvention": "Start/end are month-end wealth endpoints. Monthly return observations satisfy start < month <= end.",
+  "maxAbsoluteError": {
+    "weight": 7.336957900672125e-07,
+    "cagr": 1.2975167357209827e-08,
+    "sharpe": 1.9999895073397056e-09
+  },
+  "maxDirectMetricError": 5.551115123125783e-16,
+  "allConstraintsPassed": true,
+  "allWeightsLongOnlyAndSumOne": true,
+  "allDdoFOneChecksPassed": true,
+  "limitations": [
+    "Numerical agreement is not a strict global-optimality certificate.",
+    "All optima are retrospective within the selected sample.",
+    "Drawdown uses month ends, not daily observations."
+  ],
+  "checks": [
+    {
+      "case": "1985_2025_stock_PR_bond_TR",
+      "objective": "maxSharpe",
+      "nMonths": 491,
+      "weightSum": 1.0,
+      "minimumWeight": 0.0,
+      "constraintGap": null,
+      "directMetricErrors": {
+        "cagr": 4.163336342344337e-17,
+        "sharpe": 2.220446049250313e-16,
+        "vol": 2.7755575615628914e-17,
+        "excessVol": 1.3877787807814457e-17,
+        "mdd": 0.0
+      },
+      "scipy": {
+        "w": [
+          0.3047058759335102,
+          4.540612280045083e-18,
+          0.6952941240664898
+        ],
+        "cagr": 0.0905238508090888,
+        "sharpe": 0.6815381504331474,
+        "vol": 0.08736316064876373,
+        "excessVol": 0.08694121009278966,
+        "mdd": -0.21975069326015162
+      },
+      "javascript": {
+        "w": [
+          0.30470590210682985,
+          0,
+          0.6952940978931701
+        ],
+        "cagr": 0.09052385319848243,
+        "sharpe": 0.6815381504331464,
+        "vol": 0.08736316431398641,
+        "excessVol": 0.0869412137974846,
+        "mdd": -0.21975072425599929
+      },
+      "scipyAbsoluteErrors": {
+        "weight": 2.6173319733757694e-08,
+        "cagr": 2.389393669033346e-09,
+        "sharpe": 7.771561172376096e-16
+      },
+      "feasibleScipyStarts": 66
+    },
+    {
+      "case": "1985_2025_stock_PR_bond_TR",
+      "objective": "maxSharpeAtLeastSpxCagr",
+      "nMonths": 491,
+      "weightSum": 1.0,
+      "minimumWeight": 0.0,
+      "constraintGap": 1.049160758270773e-14,
+      "directMetricErrors": {
+        "cagr": 8.326672684688674e-17,
+        "sharpe": 4.440892098500626e-16,
+        "vol": 2.7755575615628914e-17,
+        "excessVol": 4.163336342344337e-17,
+        "mdd": 0.0
+      },
+      "scipy": {
+        "w": [
+          0.3326345327300496,
+          0.0,
+          0.6673654672699503
+        ],
+        "cagr": 0.093050315890568,
+        "sharpe": 0.6802206547122236,
+        "vol": 0.0914513245675083,
+        "excessVol": 0.09107041371021073,
+        "mdd": -0.25229239856561947
+      },
+      "javascript": {
+        "w": [
+          0.33263453273071203,
+          0,
+          0.6673654672692879
+        ],
+        "cagr": 0.09305031589062739,
+        "sharpe": 0.6802206547121639,
+        "vol": 0.09145132456760928,
+        "excessVol": 0.09107041371031266,
+        "mdd": -0.25229239856637853
+      },
+      "scipyAbsoluteErrors": {
+        "weight": 6.624145676425996e-13,
+        "cagr": 5.946632075648495e-14,
+        "sharpe": 5.928590951498336e-14
+      },
+      "feasibleScipyStarts": 66
+    },
+    {
+      "case": "1985_2025_stock_PR_bond_TR",
+      "objective": "maxCagrAtLeastSpxSharpe",
+      "nMonths": 491,
+      "weightSum": 1.0,
+      "minimumWeight": 0.0,
+      "constraintGap": 0.08269850679361412,
+      "directMetricErrors": {
+        "cagr": 8.326672684688674e-17,
+        "sharpe": 5.551115123125783e-16,
+        "vol": 8.326672684688674e-17,
+        "excessVol": 8.326672684688674e-17,
+        "mdd": 0.0
+      },
+      "scipy": {
+        "w": [
+          1.0,
+          0.0,
+          3.1151037861613975e-15
+        ],
+        "cagr": 0.13852490506695003,
+        "sharpe": 0.5425649580233332,
+        "vol": 0.2327766499463523,
+        "excessVol": 0.2328338094347011,
+        "mdd": -0.8106979790078764
+      },
+      "javascript": {
+        "w": [
+          0.9999999999969215,
+          3.0785374249830966e-12,
+          0
+        ],
+        "cagr": 0.13852490506683848,
+        "sharpe": 0.542564958023339,
+        "vol": 0.23277664994602631,
+        "excessVol": 0.23283380943437498,
+        "mdd": -0.8106979790071861
+      },
+      "scipyAbsoluteErrors": {
+        "weight": 3.0785374249830966e-12,
+        "cagr": 1.1163292512605949e-13,
+        "sharpe": 6.439293542825908e-15
+      },
+      "feasibleScipyStarts": 66
+    },
+    {
+      "case": "1985_2025_stock_PR_bond_TR",
+      "objective": "equalSpxCagr",
+      "nMonths": 491,
+      "weightSum": 1.0,
+      "minimumWeight": 0.0,
+      "constraintGap": 6.869504964868156e-15,
+      "directMetricErrors": {
+        "cagr": 2.7755575615628914e-17,
+        "sharpe": 2.220446049250313e-16,
+        "vol": 1.3877787807814457e-17,
+        "excessVol": 1.3877787807814457e-17,
+        "mdd": 0.0
+      },
+      "scipy": {
+        "w": [
+          0.3326345327300496,
+          2.2182345113210696e-18,
+          0.6673654672699503
+        ],
+        "cagr": 0.093050315890568,
+        "sharpe": 0.6802206547122236,
+        "vol": 0.0914513245675083,
+        "excessVol": 0.09107041371021073,
+        "mdd": -0.25229239856561947
+      },
+      "javascript": {
+        "w": [
+          0.3326345327306715,
+          0,
+          0.6673654672693285
+        ],
+        "cagr": 0.09305031589062376,
+        "sharpe": 0.6802206547121679,
+        "vol": 0.09145132456760312,
+        "excessVol": 0.09107041371030641,
+        "mdd": -0.252292398566332
+      },
+      "scipyAbsoluteErrors": {
+        "weight": 6.218914272437814e-13,
+        "cagr": 5.5788706987414116e-14,
+        "sharpe": 5.551115123125783e-14
+      },
+      "feasibleScipyStarts": 66
+    },
+    {
+      "case": "1985_2025_stock_PR_bond_TR",
+      "objective": "equalSpxSharpe",
+      "nMonths": 491,
+      "weightSum": 1.0,
+      "minimumWeight": 0.0,
+      "constraintGap": 0.0,
+      "directMetricErrors": {
+        "cagr": 1.3877787807814457e-17,
+        "sharpe": 4.440892098500626e-16,
+        "vol": 5.551115123125783e-17,
+        "excessVol": 0.0,
+        "mdd": 0.0
+      },
+      "scipy": {
+        "w": [
+          8.743006318923108e-14,
+          0.9999999999999651,
+          0.0
+        ],
+        "cagr": 0.09305031589062604,
+        "sharpe": 0.459866451229757,
+        "vol": 0.15084866134788016,
+        "excessVol": 0.15080035385324908,
+        "mdd": -0.5255586105410078
+      },
+      "javascript": {
+        "w": [
+          0,
+          1,
+          0
+        ],
+        "cagr": 0.0930503158906169,
+        "sharpe": 0.4598664512297249,
+        "vol": 0.1508486613478683,
+        "excessVol": 0.15080035385323726,
+        "mdd": -0.5255586105409906
+      },
+      "scipyAbsoluteErrors": {
+        "weight": 8.743006318923108e-14,
+        "cagr": 9.131584377541913e-15,
+        "sharpe": 3.164135620181696e-14
+      },
+      "feasibleScipyStarts": 54
+    },
+    {
+      "case": "1999_2025_stock_TR_bond_TR",
+      "objective": "maxSharpe",
+      "nMonths": 321,
+      "weightSum": 1.0,
+      "minimumWeight": 0.1300647730039383,
+      "constraintGap": null,
+      "directMetricErrors": {
+        "cagr": 4.163336342344337e-17,
+        "sharpe": 1.1102230246251565e-16,
+        "vol": 0.0,
+        "excessVol": 0.0,
+        "mdd": 0.0
+      },
+      "scipy": {
+        "w": [
+          0.1300646721166987,
+          0.2790175292135594,
+          0.5909177986697419
+        ],
+        "cagr": 0.06420942116619514,
+        "sharpe": 0.6054200229141472,
+        "vol": 0.07557417119514072,
+        "excessVol": 0.07580225590130533,
+        "mdd": -0.20714056195799369
+      },
+      "javascript": {
+        "w": [
+          0.1300647730039383,
+          0.27901741767327676,
+          0.5909178093227849
+        ],
+        "cagr": 0.06420942395918676,
+        "sharpe": 0.6054200229141395,
+        "vol": 0.07557417614679805,
+        "excessVol": 0.07580226087231538,
+        "mdd": -0.20714057015143506
+      },
+      "scipyAbsoluteErrors": {
+        "weight": 1.115402826212808e-07,
+        "cagr": 2.7929916573965485e-09,
+        "sharpe": 7.549516567451064e-15
+      },
+      "feasibleScipyStarts": 66
+    },
+    {
+      "case": "1999_2025_stock_TR_bond_TR",
+      "objective": "maxSharpeAtLeastSpxCagr",
+      "nMonths": 321,
+      "weightSum": 1.0000000000000002,
+      "minimumWeight": 0.26915329136637695,
+      "constraintGap": 2.0816681711721685e-16,
+      "directMetricErrors": {
+        "cagr": 2.7755575615628914e-17,
+        "sharpe": 2.220446049250313e-16,
+        "vol": 2.7755575615628914e-17,
+        "excessVol": 0.0,
+        "mdd": 0.0
+      },
+      "scipy": {
+        "w": [
+          0.4044938756727554,
+          0.2691532923080764,
+          0.3263528320191682
+        ],
+        "cagr": 0.0841455953280595,
+        "sharpe": 0.5442673544736543,
+        "vol": 0.12819641627430095,
+        "excessVol": 0.12851323880673096,
+        "mdd": -0.48349324650535874
+      },
+      "javascript": {
+        "w": [
+          0.4044938762411243,
+          0.26915329136637695,
+          0.32635283239249885
+        ],
+        "cagr": 0.0841455953281083,
+        "sharpe": 0.5442673544734631,
+        "vol": 0.12819641627440365,
+        "excessVol": 0.1285132388068115,
+        "mdd": -0.4834932466171201
+      },
+      "scipyAbsoluteErrors": {
+        "weight": 9.416994406485912e-10,
+        "cagr": 4.876654635666e-14,
+        "sharpe": 1.9095836023552692e-13
+      },
+      "feasibleScipyStarts": 66
+    },
+    {
+      "case": "1999_2025_stock_TR_bond_TR",
+      "objective": "maxCagrAtLeastSpxSharpe",
+      "nMonths": 321,
+      "weightSum": 1.0,
+      "minimumWeight": 0.016613336873424478,
+      "constraintGap": -1.1102230246251565e-16,
+      "directMetricErrors": {
+        "cagr": 1.3877787807814457e-17,
+        "sharpe": 2.7755575615628914e-16,
+        "vol": 5.551115123125783e-17,
+        "excessVol": 0.0,
+        "mdd": 0.0
+      },
+      "scipy": {
+        "w": [
+          0.72619541927259,
+          0.25719153223773755,
+          0.016613048489672544
+        ],
+        "cagr": 0.101126515284299,
+        "sharpe": 0.48338789805005616,
+        "vol": 0.2026498638090903,
+        "excessVol": 0.20298552056307764,
+        "mdd": -0.7334038158054412
+      },
+      "javascript": {
+        "w": [
+          0.7261958559314801,
+          0.25719080719509546,
+          0.016613336873424478
+        ],
+        "cagr": 0.10112651528392176,
+        "sharpe": 0.48338789805127313,
+        "vol": 0.20264986367493285,
+        "excessVol": 0.20298552041806506,
+        "mdd": -0.7334038667886529
+      },
+      "scipyAbsoluteErrors": {
+        "weight": 7.250426420912781e-07,
+        "cagr": 3.7722602819201256e-13,
+        "sharpe": 1.2172485241990216e-12
+      },
+      "feasibleScipyStarts": 66
+    },
+    {
+      "case": "1999_2025_stock_TR_bond_TR",
+      "objective": "equalSpxCagr",
+      "nMonths": 321,
+      "weightSum": 1.0000000000000002,
+      "minimumWeight": 0.26915329136637695,
+      "constraintGap": 2.0816681711721685e-16,
+      "directMetricErrors": {
+        "cagr": 2.7755575615628914e-17,
+        "sharpe": 2.220446049250313e-16,
+        "vol": 2.7755575615628914e-17,
+        "excessVol": 0.0,
+        "mdd": 0.0
+      },
+      "scipy": {
+        "w": [
+          0.40449387761278055,
+          0.2691532890904314,
+          0.326352833296788
+        ],
+        "cagr": 0.08414559532809548,
+        "sharpe": 0.544267354473513,
+        "vol": 0.12819641627420106,
+        "excessVol": 0.12851323880655516,
+        "mdd": -0.48349324688517514
+      },
+      "javascript": {
+        "w": [
+          0.4044938762411243,
+          0.26915329136637695,
+          0.32635283239249885
+        ],
+        "cagr": 0.0841455953281083,
+        "sharpe": 0.5442673544734631,
+        "vol": 0.12819641627440365,
+        "excessVol": 0.1285132388068115,
+        "mdd": -0.4834932466171201
+      },
+      "scipyAbsoluteErrors": {
+        "weight": 2.2759455431398123e-09,
+        "cagr": 1.2781442570997115e-14,
+        "sharpe": 4.973799150320701e-14
+      },
+      "feasibleScipyStarts": 66
+    },
+    {
+      "case": "1999_2025_stock_TR_bond_TR",
+      "objective": "equalSpxSharpe",
+      "nMonths": 321,
+      "weightSum": 1.0,
+      "minimumWeight": 0.016613336873424478,
+      "constraintGap": -1.1102230246251565e-16,
+      "directMetricErrors": {
+        "cagr": 1.3877787807814457e-17,
+        "sharpe": 2.7755575615628914e-16,
+        "vol": 5.551115123125783e-17,
+        "excessVol": 0.0,
+        "mdd": 0.0
+      },
+      "scipy": {
+        "w": [
+          0.7261954140531106,
+          0.25719154089088553,
+          0.01661304505600393
+        ],
+        "cagr": 0.1011265152839596,
+        "sharpe": 0.4833878980511798,
+        "vol": 0.20264986380871286,
+        "excessVol": 0.2029855205628296,
+        "mdd": -0.7334038151922102
+      },
+      "javascript": {
+        "w": [
+          0.7261958559314801,
+          0.25719080719509546,
+          0.016613336873424478
+        ],
+        "cagr": 0.10112651528392176,
+        "sharpe": 0.48338789805127313,
+        "vol": 0.20264986367493285,
+        "excessVol": 0.20298552041806506,
+        "mdd": -0.7334038667886529
+      },
+      "scipyAbsoluteErrors": {
+        "weight": 7.336957900672125e-07,
+        "cagr": 3.783084956410221e-14,
+        "sharpe": 9.35918009759007e-14
+      },
+      "feasibleScipyStarts": 66
+    },
+    {
+      "case": "2000_2009_stock_TR_bond_TR",
+      "objective": "maxSharpe",
+      "nMonths": 119,
+      "weightSum": 1.0,
+      "minimumWeight": 1.715617144595622e-13,
+      "constraintGap": null,
+      "directMetricErrors": {
+        "cagr": 1.3877787807814457e-17,
+        "sharpe": 1.6653345369377348e-16,
+        "vol": 1.3877787807814457e-17,
+        "excessVol": 0.0,
+        "mdd": 0.0
+      },
+      "scipy": {
+        "w": [
+          1.4526874798092364e-18,
+          0.012597308902172791,
+          0.9874026910978271
+        ],
+        "cagr": 0.06613445484487639,
+        "sharpe": 0.49930864679271925,
+        "vol": 0.08139885680003277,
+        "excessVol": 0.081049312652755,
+        "mdd": -0.0966627917051105
+      },
+      "javascript": {
+        "w": [
+          1.715617144595622e-13,
+          0.012597309032911857,
+          0.9874026909669166
+        ],
+        "cagr": 0.06613445483794238,
+        "sharpe": 0.49930864679271003,
+        "vol": 0.08139885678438108,
+        "excessVol": 0.08104931263714968,
+        "mdd": -0.09666279166183522
+      },
+      "scipyAbsoluteErrors": {
+        "weight": 1.3091050465874332e-10,
+        "cagr": 6.9340228003866855e-12,
+        "sharpe": 9.048317650695026e-15
+      },
+      "feasibleScipyStarts": 66
+    },
+    {
+      "case": "2000_2009_stock_TR_bond_TR",
+      "objective": "maxSharpeAtLeastSpxCagr",
+      "nMonths": 119,
+      "weightSum": 1.0,
+      "minimumWeight": 1.715617144595622e-13,
+      "constraintGap": 0.0705451257336135,
+      "directMetricErrors": {
+        "cagr": 1.3877787807814457e-17,
+        "sharpe": 1.6653345369377348e-16,
+        "vol": 1.3877787807814457e-17,
+        "excessVol": 0.0,
+        "mdd": 0.0
+      },
+      "scipy": {
+        "w": [
+          1.4526874798092364e-18,
+          0.012597308902172791,
+          0.9874026910978271
+        ],
+        "cagr": 0.06613445484487639,
+        "sharpe": 0.49930864679271925,
+        "vol": 0.08139885680003277,
+        "excessVol": 0.081049312652755,
+        "mdd": -0.0966627917051105
+      },
+      "javascript": {
+        "w": [
+          1.715617144595622e-13,
+          0.012597309032911857,
+          0.9874026909669166
+        ],
+        "cagr": 0.06613445483794238,
+        "sharpe": 0.49930864679271003,
+        "vol": 0.08139885678438108,
+        "excessVol": 0.08104931263714968,
+        "mdd": -0.09666279166183522
+      },
+      "scipyAbsoluteErrors": {
+        "weight": 1.3091050465874332e-10,
+        "cagr": 6.9340228003866855e-12,
+        "sharpe": 9.048317650695026e-15
+      },
+      "feasibleScipyStarts": 66
+    },
+    {
+      "case": "2000_2009_stock_TR_bond_TR",
+      "objective": "maxCagrAtLeastSpxSharpe",
+      "nMonths": 119,
+      "weightSum": 1.0,
+      "minimumWeight": 0.0,
+      "constraintGap": 0.6123364586684616,
+      "directMetricErrors": {
+        "cagr": 4.163336342344337e-17,
+        "sharpe": 5.551115123125783e-17,
+        "vol": 1.3877787807814457e-17,
+        "excessVol": 1.3877787807814457e-17,
+        "mdd": 0.0
+      },
+      "scipy": {
+        "w": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "cagr": 0.06679822589137493,
+        "sharpe": 0.4991612360029136,
+        "vol": 0.08292843123947427,
+        "excessVol": 0.08257464314575275,
+        "mdd": -0.10081819419562954
+      },
+      "javascript": {
+        "w": [
+          0,
+          0,
+          1
+        ],
+        "cagr": 0.06679822589137493,
+        "sharpe": 0.4991612360029136,
+        "vol": 0.08292843123947427,
+        "excessVol": 0.08257464314575275,
+        "mdd": -0.10081819419562954
+      },
+      "scipyAbsoluteErrors": {
+        "weight": 0.0,
+        "cagr": 4.163336342344337e-17,
+        "sharpe": 5.551115123125783e-17
+      },
+      "feasibleScipyStarts": 66
+    },
+    {
+      "case": "2000_2009_stock_TR_bond_TR",
+      "objective": "equalSpxCagr",
+      "nMonths": 119,
+      "weightSum": 1.0,
+      "minimumWeight": 0.0,
+      "constraintGap": 2.3889137196198007e-12,
+      "directMetricErrors": {
+        "cagr": 2.862293735361732e-17,
+        "sharpe": 6.938893903907228e-17,
+        "vol": 5.551115123125783e-17,
+        "excessVol": 2.7755575615628914e-17,
+        "mdd": 0.0
+      },
+      "scipy": {
+        "w": [
+          0.6472916269251288,
+          0.0,
+          0.3527083730748756
+        ],
+        "cagr": -0.004410670895671173,
+        "sharpe": -0.07699919689735765,
+        "vol": 0.18468335424798293,
+        "excessVol": 0.1853693953787571,
+        "mdd": -0.5886284416483685
+      },
+      "javascript": {
+        "w": [
+          0.6472916269083755,
+          0,
+          0.3527083730916245
+        ],
+        "cagr": -0.004410670893282214,
+        "sharpe": -0.07699919689173157,
+        "vol": 0.184683354242882,
+        "excessVol": 0.18536939537365318,
+        "mdd": -0.5886284416341075
+      },
+      "scipyAbsoluteErrors": {
+        "weight": 1.6753265441593612e-11,
+        "cagr": 2.3889874453675297e-12,
+        "sharpe": 5.626013543924557e-12
+      },
+      "feasibleScipyStarts": 66
+    },
+    {
+      "case": "2000_2009_stock_TR_bond_TR",
+      "objective": "equalSpxSharpe",
+      "nMonths": 119,
+      "weightSum": 1.0,
+      "minimumWeight": 1.0310641229693829e-12,
+      "constraintGap": 1.249000902703301e-16,
+      "directMetricErrors": {
+        "cagr": 8.673617379884035e-19,
+        "sharpe": 2.7755575615628914e-17,
+        "vol": 0.0,
+        "excessVol": 0.0,
+        "mdd": 0.0
+      },
+      "scipy": {
+        "w": [
+          0.0,
+          0.9999999999996413,
+          3.586856530818632e-13
+        ],
+        "cagr": -0.004410670895639127,
+        "sharpe": -0.11317522266546148,
+        "vol": 0.16121131366794292,
+        "excessVol": 0.16146534468096777,
+        "mdd": -0.5094876575393374
+      },
+      "javascript": {
+        "w": [
+          2.3518029688209045e-12,
+          0.9999999999966172,
+          1.0310641229693829e-12
+        ],
+        "cagr": -0.00441067089567124,
+        "sharpe": -0.11317522266554784,
+        "vol": 0.1612113136680096,
+        "excessVol": 0.16146534468103646,
+        "mdd": -0.5094876575389862
+      },
+      "scipyAbsoluteErrors": {
+        "weight": 3.024136496776464e-12,
+        "cagr": 3.2111466263806676e-14,
+        "sharpe": 8.633371795241374e-14
+      },
+      "feasibleScipyStarts": 66
+    },
+    {
+      "case": "2015_2025_stock_TR_bond_TR",
+      "objective": "maxSharpe",
+      "nMonths": 120,
+      "weightSum": 1.0,
+      "minimumWeight": 0.0,
+      "constraintGap": null,
+      "directMetricErrors": {
+        "cagr": 1.1102230246251565e-16,
+        "sharpe": 5.551115123125783e-16,
+        "vol": 5.551115123125783e-17,
+        "excessVol": 5.551115123125783e-17,
+        "mdd": 0.0
+      },
+      "scipy": {
+        "w": [
+          0.9999999999999999,
+          2.914335439641036e-16,
+          0.0
+        ],
+        "cagr": 0.1969804262304704,
+        "sharpe": 0.9625091003609199,
+        "vol": 0.18407230664906243,
+        "excessVol": 0.1839226659018772,
+        "mdd": -0.32383125351153685
+      },
+      "javascript": {
+        "w": [
+          1,
+          0,
+          0
+        ],
+        "cagr": 0.19698042623047035,
+        "sharpe": 0.9625091003609199,
+        "vol": 0.1840723066490624,
+        "excessVol": 0.1839226659018772,
+        "mdd": -0.32383125351153685
+      },
+      "scipyAbsoluteErrors": {
+        "weight": 2.914335439641036e-16,
+        "cagr": 5.551115123125783e-17,
+        "sharpe": 5.551115123125783e-16
+      },
+      "feasibleScipyStarts": 66
+    },
+    {
+      "case": "2015_2025_stock_TR_bond_TR",
+      "objective": "maxSharpeAtLeastSpxCagr",
+      "nMonths": 120,
+      "weightSum": 1.0,
+      "minimumWeight": 0.0,
+      "constraintGap": 0.04877861956826057,
+      "directMetricErrors": {
+        "cagr": 1.1102230246251565e-16,
+        "sharpe": 5.551115123125783e-16,
+        "vol": 5.551115123125783e-17,
+        "excessVol": 5.551115123125783e-17,
+        "mdd": 0.0
+      },
+      "scipy": {
+        "w": [
+          0.9999999999999999,
+          2.914335439641036e-16,
+          0.0
+        ],
+        "cagr": 0.1969804262304704,
+        "sharpe": 0.9625091003609199,
+        "vol": 0.18407230664906243,
+        "excessVol": 0.1839226659018772,
+        "mdd": -0.32383125351153685
+      },
+      "javascript": {
+        "w": [
+          1,
+          0,
+          0
+        ],
+        "cagr": 0.19698042623047035,
+        "sharpe": 0.9625091003609199,
+        "vol": 0.1840723066490624,
+        "excessVol": 0.1839226659018772,
+        "mdd": -0.32383125351153685
+      },
+      "scipyAbsoluteErrors": {
+        "weight": 2.914335439641036e-16,
+        "cagr": 5.551115123125783e-17,
+        "sharpe": 5.551115123125783e-16
+      },
+      "feasibleScipyStarts": 66
+    },
+    {
+      "case": "2015_2025_stock_TR_bond_TR",
+      "objective": "maxCagrAtLeastSpxSharpe",
+      "nMonths": 120,
+      "weightSum": 1.0,
+      "minimumWeight": 0.0,
+      "constraintGap": 0.1057832684215414,
+      "directMetricErrors": {
+        "cagr": 1.1102230246251565e-16,
+        "sharpe": 5.551115123125783e-16,
+        "vol": 5.551115123125783e-17,
+        "excessVol": 5.551115123125783e-17,
+        "mdd": 0.0
+      },
+      "scipy": {
+        "w": [
+          0.9999999999999987,
+          4.85722573273506e-15,
+          0.0
+        ],
+        "cagr": 0.19698042623047085,
+        "sharpe": 0.9625091003609201,
+        "vol": 0.18407230664906285,
+        "excessVol": 0.1839226659018776,
+        "mdd": -0.3238312535115371
+      },
+      "javascript": {
+        "w": [
+          1,
+          0,
+          0
+        ],
+        "cagr": 0.19698042623047035,
+        "sharpe": 0.9625091003609199,
+        "vol": 0.1840723066490624,
+        "excessVol": 0.1839226659018772,
+        "mdd": -0.32383125351153685
+      },
+      "scipyAbsoluteErrors": {
+        "weight": 4.85722573273506e-15,
+        "cagr": 3.885780586188048e-16,
+        "sharpe": 7.771561172376096e-16
+      },
+      "feasibleScipyStarts": 66
+    },
+    {
+      "case": "2015_2025_stock_TR_bond_TR",
+      "objective": "equalSpxCagr",
+      "nMonths": 120,
+      "weightSum": 1.0,
+      "minimumWeight": 0.19625942517467573,
+      "constraintGap": 1.3877787807814457e-16,
+      "directMetricErrors": {
+        "cagr": 0.0,
+        "sharpe": 0.0,
+        "vol": 2.7755575615628914e-17,
+        "excessVol": 0.0,
+        "mdd": 0.0
+      },
+      "scipy": {
+        "w": [
+          0.5892037891373395,
+          0.19625945892050348,
+          0.2145367519421571
+        ],
+        "cagr": 0.14820180666220978,
+        "sharpe": 0.9133744121977063,
+        "vol": 0.14010871218762122,
+        "excessVol": 0.1399451027812677,
+        "mdd": -0.27373286430643784
+      },
+      "javascript": {
+        "w": [
+          0.5892038142447811,
+          0.19625942517467573,
+          0.2145367605805432
+        ],
+        "cagr": 0.14820180666220992,
+        "sharpe": 0.9133744121977064,
+        "vol": 0.14010871219142712,
+        "excessVol": 0.1399451027802811,
+        "mdd": -0.2737328658192477
+      },
+      "scipyAbsoluteErrors": {
+        "weight": 3.374582774329227e-08,
+        "cagr": 1.3877787807814457e-16,
+        "sharpe": 1.1102230246251565e-16
+      },
+      "feasibleScipyStarts": 66
+    },
+    {
+      "case": "2015_2025_stock_TR_bond_TR",
+      "objective": "equalSpxSharpe",
+      "nMonths": 120,
+      "weightSum": 1.0,
+      "minimumWeight": 0.0,
+      "constraintGap": 1.99999150574115e-09,
+      "directMetricErrors": {
+        "cagr": 2.7755575615628914e-17,
+        "sharpe": 3.3306690738754696e-16,
+        "vol": 2.7755575615628914e-17,
+        "excessVol": 0.0,
+        "mdd": 0.0
+      },
+      "scipy": {
+        "w": [
+          0.0,
+          1.0,
+          5.451722815963129e-14
+        ],
+        "cagr": 0.14820180666221044,
+        "sharpe": 0.8567258319393801,
+        "vol": 0.15117692570542046,
+        "excessVol": 0.1511309814844366,
+        "mdd": -0.2386734409029403
+      },
+      "javascript": {
+        "w": [
+          9.237731839560052e-09,
+          0.9999999907622682,
+          0
+        ],
+        "cagr": 0.14820180713406406,
+        "sharpe": 0.85672583393937,
+        "vol": 0.1511769258665268,
+        "excessVol": 0.15113098164433347,
+        "mdd": -0.23867344171355076
+      },
+      "scipyAbsoluteErrors": {
+        "weight": 9.237731839560052e-09,
+        "cagr": 4.718536394943129e-10,
+        "sharpe": 1.9999895073397056e-09
+      },
+      "feasibleScipyStarts": 66
+    },
+    {
+      "case": "1985_2025_stock_PR_bond_PR",
+      "objective": "maxSharpe",
+      "nMonths": 491,
+      "weightSum": 1.0,
+      "minimumWeight": 0.0,
+      "constraintGap": null,
+      "directMetricErrors": {
+        "cagr": 5.551115123125783e-17,
+        "sharpe": 4.440892098500626e-16,
+        "vol": 2.7755575615628914e-17,
+        "excessVol": 8.326672684688674e-17,
+        "mdd": 0.0
+      },
+      "scipy": {
+        "w": [
+          0.9679691859801007,
+          0.032030814019899496,
+          0.0
+        ],
+        "cagr": 0.1373564498157609,
+        "sharpe": 0.5426000640336859,
+        "vol": 0.229400003818293,
+        "excessVol": 0.22945512979123797,
+        "mdd": -0.8034039229533741
+      },
+      "javascript": {
+        "w": [
+          0.9679695386617213,
+          0.03203046133827869,
+          0
+        ],
+        "cagr": 0.1373564627909282,
+        "sharpe": 0.5426000640336816,
+        "vol": 0.22940004083128812,
+        "excessVol": 0.22945516682699307,
+        "mdd": -0.8034040044891133
+      },
+      "scipyAbsoluteErrors": {
+        "weight": 3.5268162080354104e-07,
+        "cagr": 1.2975167357209827e-08,
+        "sharpe": 3.885780586188048e-15
+      },
+      "feasibleScipyStarts": 66
+    },
+    {
+      "case": "1985_2025_stock_PR_bond_PR",
+      "objective": "maxSharpeAtLeastSpxCagr",
+      "nMonths": 491,
+      "weightSum": 1.0,
+      "minimumWeight": 0.0,
+      "constraintGap": 0.0443061469003113,
+      "directMetricErrors": {
+        "cagr": 5.551115123125783e-17,
+        "sharpe": 4.440892098500626e-16,
+        "vol": 2.7755575615628914e-17,
+        "excessVol": 8.326672684688674e-17,
+        "mdd": 0.0
+      },
+      "scipy": {
+        "w": [
+          0.9679691859801007,
+          0.032030814019899496,
+          0.0
+        ],
+        "cagr": 0.1373564498157609,
+        "sharpe": 0.5426000640336859,
+        "vol": 0.229400003818293,
+        "excessVol": 0.22945512979123797,
+        "mdd": -0.8034039229533741
+      },
+      "javascript": {
+        "w": [
+          0.9679695386617213,
+          0.03203046133827869,
+          0
+        ],
+        "cagr": 0.1373564627909282,
+        "sharpe": 0.5426000640336816,
+        "vol": 0.22940004083128812,
+        "excessVol": 0.22945516682699307,
+        "mdd": -0.8034040044891133
+      },
+      "scipyAbsoluteErrors": {
+        "weight": 3.5268162080354104e-07,
+        "cagr": 1.2975167357209827e-08,
+        "sharpe": 3.885780586188048e-15
+      },
+      "feasibleScipyStarts": 66
+    },
+    {
+      "case": "1985_2025_stock_PR_bond_PR",
+      "objective": "maxCagrAtLeastSpxSharpe",
+      "nMonths": 491,
+      "weightSum": 1.0,
+      "minimumWeight": 0.0,
+      "constraintGap": 0.08269850679361412,
+      "directMetricErrors": {
+        "cagr": 8.326672684688674e-17,
+        "sharpe": 5.551115123125783e-16,
+        "vol": 8.326672684688674e-17,
+        "excessVol": 8.326672684688674e-17,
+        "mdd": 0.0
+      },
+      "scipy": {
+        "w": [
+          0.9999999999999997,
+          2.4841240175987878e-15,
+          0.0
+        ],
+        "cagr": 0.13852490506694998,
+        "sharpe": 0.5425649580233327,
+        "vol": 0.23277664994635255,
+        "excessVol": 0.23283380943470136,
+        "mdd": -0.8106979790078768
+      },
+      "javascript": {
+        "w": [
+          0.9999999999969215,
+          3.0785374249830966e-12,
+          0
+        ],
+        "cagr": 0.13852490506683848,
+        "sharpe": 0.542564958023339,
+        "vol": 0.23277664994602631,
+        "excessVol": 0.23283380943437498,
+        "mdd": -0.8106979790071861
+      },
+      "scipyAbsoluteErrors": {
+        "weight": 3.078204358075709e-12,
+        "cagr": 1.1157741397482823e-13,
+        "sharpe": 6.8833827526759706e-15
+      },
+      "feasibleScipyStarts": 66
+    },
+    {
+      "case": "1985_2025_stock_PR_bond_PR",
+      "objective": "equalSpxCagr",
+      "nMonths": 491,
+      "weightSum": 1.0,
+      "minimumWeight": 0.27180888888631105,
+      "constraintGap": 3.608224830031759e-16,
+      "directMetricErrors": {
+        "cagr": 5.551115123125783e-17,
+        "sharpe": 4.440892098500626e-16,
+        "vol": 2.7755575615628914e-17,
+        "excessVol": 2.7755575615628914e-17,
+        "mdd": 0.0
+      },
+      "scipy": {
+        "w": [
+          0.37881154088513497,
+          0.349379570659488,
+          0.27180888845537704
+        ],
+        "cagr": 0.0930503158906169,
+        "sharpe": 0.49144136729579746,
+        "vol": 0.13673223090598605,
+        "excessVol": 0.1367185747852667,
+        "mdd": -0.5211213053021078
+      },
+      "javascript": {
+        "w": [
+          0.378811541541572,
+          0.3493795695721169,
+          0.27180888888631105
+        ],
+        "cagr": 0.09305031589061726,
+        "sharpe": 0.49144136729579824,
+        "vol": 0.1367322309054263,
+        "excessVol": 0.13671857478477814,
+        "mdd": -0.5211213054323125
+      },
+      "scipyAbsoluteErrors": {
+        "weight": 1.087371082064692e-09,
+        "cagr": 3.0531133177191805e-16,
+        "sharpe": 1.2212453270876722e-15
+      },
+      "feasibleScipyStarts": 66
+    },
+    {
+      "case": "1985_2025_stock_PR_bond_PR",
+      "objective": "equalSpxSharpe",
+      "nMonths": 491,
+      "weightSum": 1.0,
+      "minimumWeight": 0.0,
+      "constraintGap": 1.999987730982866e-09,
+      "directMetricErrors": {
+        "cagr": 6.938893903907228e-17,
+        "sharpe": 3.885780586188048e-16,
+        "vol": 5.551115123125783e-17,
+        "excessVol": 2.7755575615628914e-17,
+        "mdd": 0.0
+      },
+      "scipy": {
+        "w": [
+          0.0,
+          0.9999999999999999,
+          4.243581496204087e-14
+        ],
+        "cagr": 0.09305031589061749,
+        "sharpe": 0.45986645122972875,
+        "vol": 0.1508486613478683,
+        "excessVol": 0.15080035385323723,
+        "mdd": -0.5255586105409878
+      },
+      "javascript": {
+        "w": [
+          8.323795658101e-09,
+          0.9999999916762043,
+          0
+        ],
+        "cagr": 0.09305031634324687,
+        "sharpe": 0.45986645322971265,
+        "vol": 0.15084866172212597,
+        "excessVol": 0.15080035422875146,
+        "mdd": -0.5255586102976326
+      },
+      "scipyAbsoluteErrors": {
+        "weight": 8.323795658101e-09,
+        "cagr": 4.5262944781132575e-10,
+        "sharpe": 1.99998428929149e-09
+      },
+      "feasibleScipyStarts": 66
+    }
+  ]
+}
