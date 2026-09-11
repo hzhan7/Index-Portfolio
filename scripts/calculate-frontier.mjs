@@ -16,7 +16,7 @@ for(let i=2;i<process.argv.length;i+=2){
 }
 const bool=(key,fallback)=>args[key]==null?fallback:args[key]==='true'?true:args[key]==='false'?false:(()=>{throw Error(`${key} must be true or false`);})();
 const bytes=readFileSync(new URL('../docs/data/history.json',import.meta.url)),history=JSON.parse(bytes).observations;
-const equityIncome=bool('equity-income',false),config={start:args.start??(equityIncome?'1999-03':'1985-01'),end:args.end??'2025-12',equityIncome,bondIncome:bool('bond-income',true),
+const equityIncome=bool('equity-income',false),config={start:args.start??(equityIncome?'1999-03':'1985-01'),end:args.end??history.at(-1).month,equityIncome,bondIncome:bool('bond-income',true),
   expectedSource:args['expected-percent']?'custom':'historical',expectedReturns:args['expected-percent']?.split(',').map(v=>Number(v)/100),
   anchorSource:args['anchor-percent']!=null?'custom':'historical',anchorRate:Number(args['anchor-percent'])/100,
   budgetSource:args['vol-percent']!=null?'custom':'sp500',targetVol:Number(args['vol-percent'])/100,gamma:args.gamma==null?5:Number(args.gamma)};

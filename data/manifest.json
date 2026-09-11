@@ -1,26 +1,75 @@
 {
   "retrieved": "2026-09-11",
-  "data_through": "2025-12-31",
+  "data_through": "2026-08-31",
+  "rf_observed_through": "2026-07",
+  "estimated_rf_months": [
+    "2026-08"
+  ],
   "files": [
     {
-      "path": "data/sources/sp500_treasury_monthly.csv",
-      "bytes": 124349,
-      "sha256": "7257c9e32e3f7f707072a31d0c66ea795b032d943acca8695c640d4f127c77b6"
+      "path": "data/sources/extension_202608/bill_yields.csv",
+      "bytes": 111079,
+      "sha256": "e8ce1c069c6ef10656856f025917ed969d94114615174bbb78f9c35fa2fcf80d"
+    },
+    {
+      "path": "data/sources/extension_202608/dgs10_daily.csv",
+      "bytes": 3443,
+      "sha256": "488cfa0f0e619956951bc3d684668f9661d816b45e563caf68b3ada8e35acae3"
+    },
+    {
+      "path": "data/sources/extension_202608/nasdaq_append.csv",
+      "bytes": 945,
+      "sha256": "f308159ad23bce241fd9c7a7caa1174090ca50f69d4403437588ffcce06a366d"
+    },
+    {
+      "path": "data/sources/extension_202608/rf_bond_append.csv",
+      "bytes": 1971,
+      "sha256": "0623bd529b7d443e0a8022456ae826776f66482be66188c6b3ac9d4ddbfc8bf3"
+    },
+    {
+      "path": "data/sources/extension_202608/sp500_monthly.csv",
+      "bytes": 2405,
+      "sha256": "1dba310cad49552f19964aed462906a70ca595f058583283becfe2b8f65e4600"
     },
     {
       "path": "data/sources/nasdaq_monthly.csv",
-      "bytes": 39673,
-      "sha256": "f4946560930fcc245824c8292c15594e8777e6ab75eaa479d515964dfd81e0be"
+      "bytes": 40537,
+      "sha256": "afa2bc868dc082dca0f65b1fa5a038a381a0f63b653cc4e03f44e4053c6a8230"
+    },
+    {
+      "path": "data/sources/sp500_treasury_monthly.csv",
+      "bytes": 126306,
+      "sha256": "b5e4306b965a3ace81ef3c1cf63c6cba487c7a54e30c016db562207909efb93b"
+    },
+    {
+      "path": "data/sources/data_quality.json",
+      "bytes": 404,
+      "sha256": "18c671ac524c106329405b93ee757a13f3721d00c27ea460ebfd9706bf9d62a8"
+    },
+    {
+      "path": "data/sources/extension_202608/estimated_rf_aug2026.json",
+      "bytes": 8727,
+      "sha256": "77bc401257e1c6e4b805e3511337176bb39c5a4e4606451dd123a88fff6af0b3"
+    },
+    {
+      "path": "data/sources/extension_202608/nasdaq_source_manifest.json",
+      "bytes": 1963,
+      "sha256": "6a4b31fca216e3125d7a2ea178c955d592fc98f61999ff349ac8f86ca88eb654"
+    },
+    {
+      "path": "data/sources/extension_202608/sp500_source_audit.json",
+      "bytes": 4474,
+      "sha256": "052c828e49f3656ec162742915ceaa4a984c660fb7b299f467cb57a6d0646724"
     },
     {
       "path": "docs/data/history.json",
-      "bytes": 156368,
-      "sha256": "1450ffed20e5ca0ae8e2c8d6f2d1f8c95240d11128fdd13b34ed2ebb6a1a57ad"
+      "bytes": 159489,
+      "sha256": "d07dad755486d6fc5fd8eb9c2810e3a06ccc75304d963c77cbe7f9601ce16248"
     },
     {
       "path": "docs/data/monthly_history.csv",
-      "bytes": 95628,
-      "sha256": "d83090329b94ef36f7a0ab8c0614faf6441696b5ee79f94a716c987cdffded30"
+      "bytes": 101964,
+      "sha256": "46d1934dc02e82d273a620001b413a148656d3ff25f4b76cde2c7a9d69035517"
     }
   ]
 }

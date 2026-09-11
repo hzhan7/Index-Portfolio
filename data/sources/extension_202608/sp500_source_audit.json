@@ -1,0 +1,84 @@
+{
+  "retrieved": "2026-09-11",
+  "scope": "Append only 2026-01 through 2026-08; December 2025 is supplied as an unchanged join baseline. No existing website or historical source file edited.",
+  "return_definition": "Monthly return = current month-end index level / preceding month-end level - 1. Returns are decimal fractions. December return copied unchanged from the old file.",
+  "prices": "Actual daily index closes, independently resampled for SPX and SPXTR. No ETF substitution or dividend imputation.",
+  "august": {
+    "month": "2026-08",
+    "spx_price_observation_date": "2026-08-31",
+    "spx_price": 7686.14,
+    "spx_price_return": 0.0262252794496991,
+    "spx_total_return_observation_date": "2026-08-31",
+    "spx_total_return_index": 17219.939453125,
+    "spx_total_return": 0.027233078535142896,
+    "spx_total_return_index_yahoo_unrounded": 17219.939453125,
+    "spx_price_source": "FRED SP500 / S&P Dow Jones Indices; actual daily close",
+    "spx_total_return_source": "Yahoo Finance chart API ^SP500TR USD INDEX; actual daily close"
+  },
+  "december_baseline_preserved": {
+    "spx_price": 6845.5,
+    "spx_total_return_index": 15220.4502,
+    "spx_price_return": -0.0005241572238063,
+    "spx_total_return": 0.0006120908915989
+  },
+  "old_Dec2025_to_Jun2026_max_level_difference": 2.9687500500585884e-05,
+  "old_July_was_partial": {
+    "snapshot_close": 16780.8105,
+    "matching_actual_date": "2026-07-22",
+    "actual_July31_close": 16763.419921875
+  },
+  "Yahoo_metadata": {
+    "symbol": "^SP500TR",
+    "longName": "S&P 500 (TR)",
+    "shortName": "S&P 500 (TR)",
+    "currency": "USD",
+    "instrumentType": "INDEX",
+    "exchangeTimezoneName": "America/New_York"
+  },
+  "crosscheck_actual_SSGA_HTML": {
+    "1_month": {
+      "calculated_percent": 2.7233078535142896,
+      "SSGA_published_benchmark_percent": 2.72,
+      "consistent_at_published_2_decimal_precision": true
+    },
+    "3_month": {
+      "calculated_percent": 1.680448590163497,
+      "SSGA_published_benchmark_percent": 1.68,
+      "consistent_at_published_2_decimal_precision": true
+    },
+    "6_month": {
+      "calculated_percent": 12.373821588673305,
+      "SSGA_published_benchmark_percent": 12.37,
+      "consistent_at_published_2_decimal_precision": true
+    },
+    "QTD": {
+      "calculated_percent": 2.658085558951906,
+      "SSGA_published_benchmark_percent": 2.66,
+      "consistent_at_published_2_decimal_precision": true
+    },
+    "YTD": {
+      "calculated_percent": 13.13686012470907,
+      "SSGA_published_benchmark_percent": 13.14,
+      "consistent_at_published_2_decimal_precision": true
+    }
+  },
+  "sources": {
+    "SPX_price_FRED": "https://fred.stlouisfed.org/series/SP500",
+    "SPXTR_actual_Yahoo_JSON": "https://query1.finance.yahoo.com/v8/finance/chart/%5ESP500TR?period1=1767139200&period2=1788307200&interval=1d",
+    "SPXTR_old_GitHub_snapshot_still_partial_July": "https://raw.githubusercontent.com/vanexymx/sp500-historical-analysis/main/data/SP500TR_monthly.json",
+    "SSGA_primary_benchmark_validation": "https://www.ssga.com/us/en/individual/mf/state-street-total-return-vis-fund-class-3-ssttx",
+    "SSGA_second_actual_download": "https://www.ssga.com/us/en/intermediary/etfs/state-street-spdr-portfolio-sp-500-etf-spym"
+  },
+  "access_limits": "YCharts search result showed 17219.94, but actual page fetch encountered bot verification; it is not treated as a directly validated raw input. S&P index page direct HTTP retrieval was 403. Actual Yahoo JSON and SSGA HTML were successfully retrieved and stored.",
+  "raw_sha256": {
+    "old_spx_rf_10y_monthly_1985_2025.csv": "7257c9e32e3f7f707072a31d0c66ea795b032d943acca8695c640d4f127c77b6",
+    "sp500_official.html": "0e1371d4226023ded052cd3a1847cfbce72157d4c19796bb0d6de0abfb1c952d",
+    "spx_daily_fred_2016_2026.csv": "77f09bf0345524e992344fe93d8fd260288761545952f20e8583fd2355af222c",
+    "spxtr_monthly_github_fresh.json": "15bc08c9742cfca73a3ae2aefab6ca1bd506e53a3de6c4b15541b6072a3ad5dc",
+    "spxtr_monthly_github_old.json": "15bc08c9742cfca73a3ae2aefab6ca1bd506e53a3de6c4b15541b6072a3ad5dc",
+    "spxtr_yahoo_chart.json": "672faaf65990f2d47fb1bcc8c7df936bdf52e516e9595f7adaf9e01a32f3533a",
+    "spxtr_ycharts_level.html": "c2b324162cdd5de2ec1f25a2672b28d8ac0a388d9e59c647ce4a51d1993ee4f4",
+    "ssga_spym.html": "953045101a937e105a7fead3314256c11dfa12ef14221c202db497272776c49b",
+    "ssga_ssttx.html": "7da0311a4ebe00105ebc60d9eb7f48efc723318eac447ddba3be88a58670b701"
+  }
+}

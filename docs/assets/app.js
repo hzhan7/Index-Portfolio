@@ -6,7 +6,7 @@ const $=id=>document.getElementById(id),d3=window.d3;
 const keys={cagr_floor:'maxSharpeAtLeastSpxCagr',cagr_equal:'equalSpxCagr',sharpe_floor:'maxCagrAtLeastSpxSharpe',sharpe_equal:'equalSpxSharpe',max_sharpe:'maxSharpe',tangency:'tangency',utility:'utility',risk_budget:'riskBudget'};
 const modelObjectives=new Set(['tangency','utility','risk_budget']);
 const pct=v=>(v*100).toFixed(2)+'%',fmt=v=>Number.isFinite(v)?v.toFixed(3):'—';
-const state={history:[],main:null,config:null,w:[.4,.3,.3],sensitivity:[],mainId:0,sensitivityId:0};
+const state={history:[],qualityNotes:[],latestMonth:null,main:null,config:null,w:[.4,.3,.3],sensitivity:[],mainId:0,sensitivityId:0};
 const tooltip=$('chart-tooltip');
 const worker=new Worker(new URL('./worker.js?v=2',import.meta.url),{type:'module'});
 const colors={ndx:'#2563c9',spx:'#bf8030',bond:'#788797',ink:'#17253e',line:'#dce3ed',accent:'#19634f'};
@@ -33,9 +33,9 @@ function requestMain(){
   updateControlVisibility();
   const config=readConfig();
   const earliest=config.equityIncome?'1999-03':'1985-01';
-  if(!config.start||!config.end||config.start<earliest||config.end>'2025-12'||config.start>=config.end){
+  if(!config.start||!config.end||config.start<earliest||config.end>state.latestMonth||config.start>=config.end){
     state.mainId++;document.body.classList.remove('computing');
-    $('data-notice').textContent=`所选日期不可用：当前口径起点最早为${earliest}，终点最晚为2025-12。图表仍显示上一组有效条件。`;
+    $('data-notice').textContent=`所选日期不可用：当前口径起点最早为${earliest}，终点最晚为${state.latestMonth}。图表仍显示上一组有效条件。`;
     return;
   }
   if((config.expectedSource==='custom'&&config.expectedReturns.some(v=>!Number.isFinite(v)))||(config.anchorSource==='custom'&&!Number.isFinite(config.anchorRate))||(config.budgetSource==='custom'&&(!Number.isFinite(config.targetVol)||config.targetVol<0))){
@@ -60,6 +60,9 @@ worker.onmessage=({data})=>{
     $('sample-dates').textContent=`${labelDate(state.config.start)} — ${labelDate(state.config.end)}`;
     $('sample-details').textContent=`${state.main.rows.length}个月 · 美元 · 每月再平衡 · 无杠杆`;
     $('data-notice').textContent=notices(state.config);
+    const estimates=state.qualityNotes.filter(q=>q.month>state.config.start&&q.month<=state.config.end&&q.status==='estimated');
+    $('quality-notice').hidden=!estimates.length;
+    $('quality-notice').textContent=estimates.map(q=>`${q.month} 无风险月收益 RF 暂估为 ${(q.effective_value*100).toFixed(4)}%；French正式值尚未发布。夏普与涉及RF的优化使用此暂估值，资产CAGR不受RF直接影响。`).join(' ');
     $('cagr-label').textContent=state.config.equityIncome&&state.config.bondIncome?'历史含息 CAGR':'历史当前口径 CAGR';
     $('contour-key').textContent=`┄ 标普 ${state.config.objective.startsWith('sharpe')?'夏普':'CAGR'} ${modelObjectives.has(state.config.objective)?'参考':''}等值线`;
     const model=state.main.meanVariance.model;
@@ -235,7 +238,7 @@ function renderSensitivityTable(){
 function redraw(){if(!state.main)return;chartRefs.model=drawMeanVarianceChart($('model-chart'),{meanVariance:state.main.meanVariance,grid:state.main.grid,objective:state.config.objective,optimal:state.optimal,config:state.config,w:state.w,onSelect:w=>setWeights(w,true),onHover:showModelTooltip,onLeave:hideTooltip});drawSurface('cagr');drawSurface('sharpe');drawFrontier();updateMarkers();drawSensitivity();}
 for(let i=0;i<3;i++){$(`weight-${i}`).addEventListener('input',event=>{if(state.main)setWeights(adjustWeight(state.w,i,Number(event.target.value)/100));});$(`weight-${i}`).addEventListener('change',()=>{if(state.main)setWeights(state.w,true);});}
 document.querySelectorAll('[data-preset]').forEach(button=>button.addEventListener('click',()=>{if(!state.main)return;const w={optimal:state.optimal?.w,sp500:[0,1,0],ndx:[1,0,0],bond:[0,0,1]}[button.dataset.preset];if(w)setWeights(w,true);}));
-document.querySelectorAll('[data-period]').forEach(button=>button.addEventListener('click',()=>{const p=button.dataset.period;if(p==='1985'){$('start-month').value='1985-01';$('equity-income').checked=false;}else if(p==='1999'){$('start-month').value='1999-03';$('equity-income').checked=true;}else $('start-month').value=p+'-01';$('end-month').value='2025-12';$('start-month').min=$('equity-income').checked?'1999-03':'1985-01';requestMain();}));
+document.querySelectorAll('[data-period]').forEach(button=>button.addEventListener('click',()=>{const p=button.dataset.period;if(p==='1985'){$('start-month').value='1985-01';$('equity-income').checked=false;}else if(p==='1999'){$('start-month').value='1999-03';$('equity-income').checked=true;}else $('start-month').value=p+'-01';$('end-month').value=state.latestMonth;$('start-month').min=$('equity-income').checked?'1999-03':'1985-01';requestMain();}));
 for(const id of ['start-month','end-month','objective','bond-income'])$(id).addEventListener('change',requestMain);
 for(const id of ['expected-source','expected-0','expected-1','expected-2','anchor-source','anchor-rate','budget-source','target-vol'])$(id).addEventListener('change',requestMain);
 let gammaTimer;$('risk-gamma').addEventListener('input',()=>{updateControlVisibility();clearTimeout(gammaTimer);gammaTimer=setTimeout(requestMain,140);});$('risk-gamma').addEventListener('change',()=>{clearTimeout(gammaTimer);requestMain();});
@@ -245,8 +248,11 @@ let resizeTimer,lastWidth=0;const observer=new ResizeObserver(entries=>{const wi
 
 try{
   if(!d3)throw new Error('图表资源未加载。');
-  const response=await fetch(new URL('../data/history.json',import.meta.url));if(!response.ok)throw new Error('历史数据加载失败。');
-  const data=await response.json();state.history=data.observations;
+  const response=await fetch(new URL('../data/history.json?v=202608',import.meta.url));if(!response.ok)throw new Error('历史数据加载失败。');
+  const data=await response.json();state.history=data.observations;state.qualityNotes=data.quality_notes??[];state.latestMonth=state.history.at(-1).month;
+  $('end-month').max=state.latestMonth;$('end-month').value=state.latestMonth;
+  $('start-month').max=String(Number(state.latestMonth.slice(0,4))-1)+state.latestMonth.slice(4);
+  $('data-through').textContent=`计算数据截至${state.latestMonth.slice(0,4)}年${Number(state.latestMonth.slice(5))}月 · 固定历史样本，不自动更新`;
   $('load-status').hidden=true;$('app').hidden=false;requestMain();
 }catch(error){$('load-status').textContent=error.message+' 请刷新重试。';}
 

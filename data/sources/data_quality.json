@@ -1,0 +1,13 @@
+{
+  "notes": [
+    {
+      "month": "2026-08",
+      "field": "RF",
+      "status": "estimated",
+      "observed_value": null,
+      "effective_value": 0.003135634805128351,
+      "note": "French官方尚未发布；按前月末四周国库券折价报价及实际31天期限暂估，并非实际GBOM指数回报。",
+      "source": "data/sources/extension_202608/estimated_rf_aug2026.json"
+    }
+  ]
+}

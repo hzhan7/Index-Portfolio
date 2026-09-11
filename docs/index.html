@@ -6,21 +6,21 @@
   <meta name="description" content="探索纳斯达克100、标普500和十年期美国国债的配置比例、含息复合收益与夏普比率。">
   <meta name="theme-color" content="#111d32">
   <title>Index Portfolio · 指数配比研究</title>
-  <link rel="stylesheet" href="assets/styles.css?v=2">
+  <link rel="stylesheet" href="assets/styles.css?v=3">
   <script defer src="assets/d3.v7.min.js"></script>
-  <script type="module" src="assets/app.js?v=2"></script>
+  <script type="module" src="assets/app.js?v=3"></script>
 </head>
 <body>
   <header class="masthead"><div class="shell masthead-inner"><a class="brand" href="./">INDEX / PORTFOLIO</a><a href="https://github.com/hzhan7/Index-Portfolio" target="_blank" rel="noopener">GitHub ↗</a></div></header>
   <main class="shell">
-    <div class="heading"><div><div class="eyebrow">THREE ASSETS · ONE PORTFOLIO</div><h1>指数配比研究</h1></div><div class="sample"><b id="sample-dates">1985.01.31 — 2025.12.31</b><span id="sample-details">美元 · 每月再平衡 · 无杠杆</span></div></div>
+    <div class="heading"><div><div class="eyebrow">THREE ASSETS · ONE PORTFOLIO</div><h1>指数配比研究</h1></div><div class="sample"><b id="sample-dates">1985.01.31 — 2026.08.31</b><span id="sample-details">美元 · 每月再平衡 · 无杠杆</span></div></div>
     <div id="load-status" role="status">正在读取回测数据…</div>
     <div id="app" hidden>
       <section class="research-section" aria-labelledby="research-title">
         <div class="section-heading"><h2 id="research-title">研究条件</h2><div class="presets"><button type="button" data-period="1985">1985起 · 股票价格</button><button type="button" data-period="1999">1999起 · 股票含息</button><button type="button" data-period="2003">2003起</button><button type="button" data-period="2009">2009起</button></div></div>
         <div class="research-controls">
-          <label>起点（月末）<input type="month" id="start-month" value="1985-01" min="1985-01" max="2024-12"></label>
-          <label>终点（月末）<input type="month" id="end-month" value="2025-12" min="1986-01" max="2025-12"></label>
+          <label>起点（月末）<input type="month" id="start-month" value="1985-01" min="1985-01" max="2025-08"></label>
+          <label>终点（月末）<input type="month" id="end-month" value="2026-08" min="1986-01" max="2026-08"></label>
           <label class="objective-control">优化目标<select id="objective"><optgroup label="有效前沿上的选点"><option value="tangency" selected>切点组合 · 单位波动的超额收益最大</option><option value="risk_budget">风险预算 · 波动率上限内预期收益最大</option><option value="utility">风险偏好 · 收益减去风险惩罚</option></optgroup><optgroup label="历史表现对标"><option value="cagr_floor">历史CAGR ≥ 标普，历史夏普最大</option><option value="cagr_equal">历史CAGR = 标普，历史夏普最大</option><option value="sharpe_floor">历史夏普 ≥ 标普，历史CAGR最大</option><option value="sharpe_equal">历史夏普 = 标普，历史CAGR最大</option><option value="max_sharpe">历史夏普最大，不设收益门槛</option></optgroup></select></label>
           <div class="income-controls"><label><input type="checkbox" id="equity-income">股票股息再投资</label><label><input type="checkbox" id="bond-income" checked>计入美债票息</label></div>
         </div>
@@ -32,6 +32,7 @@
           <p id="assumptions-note" class="parameter-help">这里的预期收益是算术年化估计，不是CAGR；协方差来自所选历史样本。自定义预期须与股息、票息开关保持相同口径。</p>
         </div>
         <div id="data-notice" class="data-notice" role="status"></div>
+        <p id="quality-notice" class="quality-notice" role="status" hidden></p>
       </section>
       <section class="allocation-section" aria-labelledby="allocation-title">
         <div class="section-heading"><h2 id="allocation-title">配置比例</h2><div class="presets"><button type="button" data-preset="optimal" class="active">采用当前目标最优解</button><button type="button" data-preset="sp500">100% 标普</button><button type="button" data-preset="ndx">100% 纳指</button><button type="button" data-preset="bond">100% 美债</button></div></div>
@@ -73,12 +74,13 @@
       <details class="methodology"><summary>数据、计算口径与研究边界</summary><div class="method-grid">
         <div><h3>1985与1999的区别</h3><p>股票价格回报可从1985年1月31日开始。已核验的纳指含息序列从1999年3月4日开始，因此含息月度比较的共同基点为1999年3月末；两者不能拼接后冒充1985年以来的真实总回报。</p><p>股票股息与美债票息可独立开关。关闭收入只用于归因比较，不能解释为完整投资收益。固定权重、每月末再平衡，不使用杠杆，不扣除税费和交易成本。</p></div>
         <div><h3>公式</h3><p>每月组合收益 r<sub>p,t</sub> = Σ w<sub>i</sub>r<sub>i,t</sub>。CAGR = [∏(1+r<sub>p,t</sub>)]<sup>12/T</sup> − 1。</p><p>夏普 = √12 × 平均(r<sub>p,t</sub> − r<sub>f,t</sub>) / 样本标准差(r<sub>p,t</sub> − r<sub>f,t</sub>)。无风险收益使用同期1个月国库券；十年期美债本身是有价格风险的投资资产。</p></div>
+        <div><h3>2026年8月数据补充</h3><p>股票价格与含息指数均取实际月末数据；美债按原公式续算。2026年1—7月RF来自French正式文件。因8月RF尚未发布，暂用7月31日四周国库券折价年率3.63%，按31天合成到期券估计月回报0.31356348%：1 / (1−0.0363×31/360) − 1。</p><p>这不是实际GBOM指数回报。页面及CSV的RF_status标明暂估；源文件保留正式RF缺失值及估计依据。2025年及以前的历史数值保持原样。<a href="https://fred.stlouisfed.org/series/DTB4WK" target="_blank" rel="noopener">报价来源</a> · <a href="https://www.treasurydirect.gov/marketable-securities/understanding-pricing/" target="_blank" rel="noopener">国库券定价惯例</a>。</p></div>
         <div><h3>美债为模型总回报</h3><p>使用FRED月末DGS10收益率与Swinkels改进公式，估算买入10年期平价国债、持有1个月、再滚动重置期限的总回报。它不是直接观测的国债指数，也不是某只ETF；未完整模拟收益率曲线、真实付息日和交易摩擦。</p></div>
         <div><h3>两种不同的优化口径</h3><p>历史对标目标使用几何CAGR和历史夏普；“等于”与“不低于”分开求解。新有效前沿使用年化算术预期收益 μ 与总收益协方差 Σ，三个权重非负且合计100%。切点最大化 (μ−r₀)/σ；风险预算最大化 μ 且 σ 不超过上限；风险偏好最大化 μ−λσ²/2。</p><p>默认 μ=12×月收益算术均值，Σ=12×月收益样本协方差。默认 r₀=12×同期1个月短债月收益均值，是单期固定截距近似，非今天的无风险利率。自定义 μ 与 r₀ 属于情景假设。全部为样本估计，未经样本外验证，单一资产有时确实是约束下的最优解。</p></div>
         <div><h3>切线与历史夏普的区别</h3><p>经典切点评分的分母是组合总收益波动；上方历史夏普的分母是每月扣除同期RF后的超额收益波动。RF随时间变化时两者不完全相同。自定义收益门槛只能称为门槛调整评分，不能称为无风险夏普，也不强制预期收益达到门槛。</p><p>短债只作为图上的截距，不实际加入持仓。线上的现金混合点与杠杆延长段不属于本次三资产可执行组合。十年期美债仍是风险资产。若所有预期收益均不超过截距，则不显示正风险溢价切点；波动预算低于全局最小方差组合时显示无解。</p></div>
         <div><h3>模型依据与估计局限</h3><p><a href="https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/portfolio-risk-return-part-1" target="_blank" rel="noopener">CFA：有效前沿、资本配置线与风险偏好</a> · <a href="https://web.stanford.edu/~wfsharpe/mia/rr/mia_rr2.htm" target="_blank" rel="noopener">William Sharpe：均值—方差组合选择</a> · <a href="https://web.stanford.edu/~wfsharpe/art/sr/sr.htm" target="_blank" rel="noopener">Sharpe：历史与预期夏普比率</a>。</p><p>小幅修改收益预期可能显著改变最优权重。切点不保证分散，风险预算也不保证最大亏损；自定义参数属于情景假设。所有历史窗口均为样本内重估，不是可提前知道的真实交易策略。</p></div>
       </div><div class="source-list"><h3>来源</h3><ul><li><a href="https://indexes.nasdaq.com/Index/History/NDX" target="_blank" rel="noopener">Nasdaq：NDX官网价格历史</a> · <a href="https://indexes.nasdaq.com/Index/History/XNDX" target="_blank" rel="noopener">XNDX官网总回报历史</a> · <a href="https://indexes.nasdaq.com/docs/NDX%20Versions.pdf" target="_blank" rel="noopener">指数版本与基值日期</a></li><li><a href="https://lukestein-classes.github.io/fdap/data/sp500d.csv" target="_blank" rel="noopener">S&amp;P 500价格：CRSP教学公开副本</a> · <a href="https://fred.stlouisfed.org/series/SP500" target="_blank" rel="noopener">近期FRED/S&amp;P数据</a></li><li><a href="https://github.com/vanexymx/sp500-historical-analysis/blob/main/data/SP500TR_monthly.json" target="_blank" rel="noopener">S&amp;P 500 Total Return：Yahoo历史数据的公开副本</a>（二手来源，非S&amp;P官方直接导出）</li><li><a href="https://fred.stlouisfed.org/series/DGS10" target="_blank" rel="noopener">Federal Reserve / FRED：10年期美国国债月末收益率</a></li><li><a href="https://doi.org/10.25397/eur.8152748" target="_blank" rel="noopener">Swinkels：International government bond returns</a>（第6版数据中的改进公式） · <a href="https://repub.eur.nl/pub/120274/Repub_120274_O-A.pdf" target="_blank" rel="noopener">原方法论文</a></li><li><a href="https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/Data_Library/f-f_factors.html" target="_blank" rel="noopener">Kenneth French Data Library：月度无风险收益</a></li></ul></div></details>
-      <footer><span>计算数据截至2025年12月 · 固定历史样本，不自动更新</span><a href="https://github.com/hzhan7/Index-Portfolio" target="_blank" rel="noopener">数据与可复算代码 ↗</a></footer>
+      <footer><span id="data-through">计算数据截至2026年8月 · 固定历史样本，不自动更新</span><a href="https://github.com/hzhan7/Index-Portfolio" target="_blank" rel="noopener">数据与可复算代码 ↗</a></footer>
     </div>
   </main>
   <div id="chart-tooltip" role="tooltip" hidden></div>

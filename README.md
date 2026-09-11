@@ -18,11 +18,12 @@
 
 | 数据 | 月末点位范围 | 可计算的完整月收益 |
 |---|---|---|
-| NDX价格 | 1985-01至2025-12 | 1985-02至2025-12，491个月 |
-| SPX价格 | 1985-01至2025-12 | 1985-02至2025-12，491个月 |
-| XNDX含息 | 1999-03至2025-12 | 1999-04至2025-12，321个月 |
-| SPXTR含息 | 1988-01至2025-12 | 1988-02至2025-12，455个月 |
-| 10年期美债模型、无风险收益 | 1985-01至2025-12 | 回测时按股票共同区间选择 |
+| NDX价格 | 1985-01至2026-08 | 1985-02至2026-08，499个月 |
+| SPX价格 | 1985-01至2026-08 | 1985-02至2026-08，499个月 |
+| XNDX含息 | 1999-03至2026-08 | 1999-04至2026-08，329个月 |
+| SPXTR含息 | 1988-01至2026-08 | 1988-02至2026-08，463个月 |
+| 10年期美债模型 | 1985-01至2026-08 | 沿用原收益公式 |
+| 无风险收益 | 正式值至2026-07；2026-08暂估 | 暂估月份明确标记，不冒充正式数据 |
 
 默认从**1985-01-31**开始，**股票不含股息、美债含票息**。这是最长可核验价格样本，不是全资产含息回报。打开股票股息选项后，共同起点设为**1999-03-31**；页面和日期控件会明确显示变化。1985–1999年缺失的XNDX没有用价格、年末股息率或ETF代理拼接。
 
@@ -85,7 +86,7 @@ bond_total = bond_price + coupon
 
 | 文件 | 内容 |
 |---|---|
-| [docs/data/monthly_history.csv](docs/data/monthly_history.csv) | 可下载的492个月历史：指数点位、价格/含息月回报、RF、票息、DGS10 |
+| [docs/data/monthly_history.csv](docs/data/monthly_history.csv) | 可下载的500个月历史：指数点位、价格/含息月回报、RF、票息、DGS10与RF_status |
 | [docs/data/history.json](docs/data/history.json) | 网站实际读取的数据；缺失值为null，不是0 |
 | [data/sources/nasdaq_monthly.csv](data/sources/nasdaq_monthly.csv) | Nasdaq官网月末原始观察值与观察日期 |
 | [data/sources/sp500_treasury_monthly.csv](data/sources/sp500_treasury_monthly.csv) | SPX/SPXTR月末值、RF、DGS10及来源标识 |
@@ -94,7 +95,11 @@ bond_total = bond_price + coupon
 | [data/validation/reference_results.json](data/validation/reference_results.json) | 五个代表性样本、每样本五个优化目标 |
 | [data/validation/scipy_crosscheck.json](data/validation/scipy_crosscheck.json) | 独立SciPy多起点验证结果 |
 
-数据固定截至2025年12月，检索日期2026年9月11日，不自动更新。股票指数、交易所及第三方数据的权利仍归各来源所有；本项目没有为来源数据新增许可或担保其商业再分发权。参考研究文件不包含在此仓库中。
+数据固定截至2026年8月，检索日期2026年9月11日，不自动更新。2025年及以前的492个月原观察数值逐项保留。股票指数、交易所及第三方数据的权利仍归各来源所有；本项目没有为来源数据新增许可或担保其商业再分发权。参考研究文件不包含在此仓库中。
+
+**8月RF是暂估值。** French美国及国际官方文件均只到2026年7月，本次没有取得8月实际GBOM回报。8月暂用7月31日DTB4WK折价年率3.63%，假设一张31天合成到期券：`RF = 1/(1-0.0363*31/360)-1 = 0.003135634805128351`（0.31356348%月收益）。这不是实际指数回报；未把利率直接当月收益，未用7月RF平填。页面、CSV的`RF_status=estimated`及JSON的`quality_notes`均标明。原始追加文件中8月正式RF仍为空，暂估仅通过显式参数`--use-estimated-rf`应用。依据与前七月误差检验见[data/sources/extension_202608/estimated_rf_aug2026.json](data/sources/extension_202608/estimated_rf_aug2026.json)。
+
+2026年SPXTR改用Yahoo原始日数据取真实月末，并以State Street公布的标普基准1/3/6月、QTD及YTD收益交叉核验。旧公开副本的2026-07值实际停在7月22日，本次未采用。完整新增来源保存在[data/sources/extension_202608](data/sources/extension_202608)。
 
 ## 本地运行与复算
 
@@ -113,10 +118,10 @@ python3 scripts/build_data.py
 用Node复算所有目标：
 
 ```sh
-node scripts/calculate-portfolios.mjs --start 1985-01 --end 2025-12 --stocksIncome false --bondIncome true --objective all
-node scripts/calculate-portfolios.mjs --start 1999-03 --end 2025-12 --stocksIncome true --bondIncome true --objective all
-node scripts/calculate-frontier.mjs --start 1999-03 --end 2025-12 --equity-income true --bond-income true
-node scripts/calculate-frontier.mjs --start 1999-03 --end 2025-12 --equity-income true --expected-percent 10,8,4 --anchor-percent 3 --vol-percent 12 --gamma 5
+node scripts/calculate-portfolios.mjs --start 1985-01 --end 2026-08 --stocksIncome false --bondIncome true --objective all
+node scripts/calculate-portfolios.mjs --start 1999-03 --end 2026-08 --stocksIncome true --bondIncome true --objective all
+node scripts/calculate-frontier.mjs --start 1999-03 --end 2026-08 --equity-income true --bond-income true
+node scripts/calculate-frontier.mjs --start 1999-03 --end 2026-08 --equity-income true --expected-percent 10,8,4 --anchor-percent 3 --vol-percent 12 --gamma 5
 npm run check
 npm test
 ```

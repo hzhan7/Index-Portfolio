@@ -1,0 +1,63 @@
+{
+  "sources": [
+    {
+      "symbol": "NDX",
+      "endpoint": "https://indexes.nasdaq.com/Index/HistoryChartData",
+      "method": "POST",
+      "form": {
+        "id": "NDX",
+        "startDate": "2025-12-01",
+        "endDate": "2026-08-31"
+      },
+      "status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "retrieved_at_utc": "2026-09-11T06:07:38.875Z",
+      "raw_file": "ndx_daily_20251201_20260831_raw.json",
+      "sha256": "9ff37e3e65863f6f8352ffdd18e9e32a43577d3994cde8600dd86b318b35ac6f",
+      "raw_rows": 188,
+      "valid_daily_rows": 188,
+      "rejected_nonpositive_or_missing": [],
+      "first_actual_observation": {
+        "date": "2025-12-01",
+        "value": 25342.84902267183
+      },
+      "last_actual_observation": {
+        "date": "2026-08-31",
+        "value": 29456.97325299668
+      },
+      "month_end_count": 9
+    },
+    {
+      "symbol": "XNDX",
+      "endpoint": "https://indexes.nasdaq.com/Index/HistoryChartData",
+      "method": "POST",
+      "form": {
+        "id": "XNDX",
+        "startDate": "2025-12-01",
+        "endDate": "2026-08-31"
+      },
+      "status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "retrieved_at_utc": "2026-09-11T06:07:38.875Z",
+      "raw_file": "xndx_daily_20251201_20260831_raw.json",
+      "sha256": "d3510df654b9e78a56e29210ef035146931741764bc3c8813b0c65213672ba1f",
+      "raw_rows": 188,
+      "valid_daily_rows": 188,
+      "rejected_nonpositive_or_missing": [],
+      "first_actual_observation": {
+        "date": "2025-12-01",
+        "value": 30806.88339595097
+      },
+      "last_actual_observation": {
+        "date": "2026-08-31",
+        "value": 35976.93828495717
+      },
+      "month_end_count": 9
+    }
+  ],
+  "public_entry_pages": [
+    "https://indexes.nasdaq.com/Index/History/NDX",
+    "https://indexes.nasdaq.com/Index/History/XNDX"
+  ],
+  "version_definition": "https://indexes.nasdaq.com/docs/NDX%20Versions.pdf"
+}

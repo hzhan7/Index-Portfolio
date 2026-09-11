@@ -2,6 +2,7 @@
 import csv
 import json
 import math
+import calendar
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -34,10 +35,16 @@ for month in sorted(ndx.keys() & other.keys()):
     output.append(row)
     previous = row
 
-columns = ['month','NDX','SPX','XNDX','SPXTR','ndx_pr','spx_pr','ndx_tr','spx_tr','bond_tr','bond_pr','coupon','RF','dgs10_pct']
+quality_path=ROOT/'data/sources/data_quality.json'
+quality=json.loads(quality_path.read_text())['notes'] if quality_path.exists() else []
+rf_quality={q['month']:q['status'] for q in quality if q['field']=='RF'}
+columns = ['month','NDX','SPX','XNDX','SPXTR','ndx_pr','spx_pr','ndx_tr','spx_tr','bond_tr','bond_pr','coupon','RF','dgs10_pct','RF_status']
 with (ROOT/'docs/data/monthly_history.csv').open('w', newline='') as f:
-    writer=csv.DictWriter(f,fieldnames=columns);writer.writeheader();writer.writerows(output)
-payload=dict(as_of='2025-12-31', retrieved='2026-09-11', observations=output,
-             price_baseline='1985-01',total_return_baseline='1999-03')
+    writer=csv.DictWriter(f,fieldnames=columns);writer.writeheader()
+    writer.writerows({**row,'RF_status':rf_quality.get(row['month'],'observed')} for row in output)
+last_year,last_month=map(int,output[-1]['month'].split('-'))
+as_of=f'{last_year:04d}-{last_month:02d}-{calendar.monthrange(last_year,last_month)[1]:02d}'
+payload=dict(as_of=as_of, retrieved='2026-09-11', observations=output,
+             price_baseline='1985-01',total_return_baseline='1999-03',quality_notes=quality)
 (ROOT/'docs/data/history.json').write_text(json.dumps(payload,ensure_ascii=False,separators=(',',':'),allow_nan=False)+'\n')
 print(f'Built {len(output)} month-end observations; {output[0]["month"]} to {output[-1]["month"]}.')

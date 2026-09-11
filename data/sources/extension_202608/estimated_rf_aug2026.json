@@ -1,0 +1,196 @@
+{
+  "status": "PROVISIONAL RF INPUT; not an observed August Treasury-bill index return. Applied only with --use-estimated-rf; see data/sources/data_quality.json.",
+  "month": "2026-08",
+  "estimated_RF": 0.003135634805128351,
+  "method_id": "prior_month_end_4week_discount_quote_ACT360_calendar_month_synthetic_bill",
+  "august_calculation": {
+    "month": "2026-08",
+    "period_start": "2026-07-31",
+    "period_end": "2026-08-31",
+    "calendar_days": 31,
+    "discount_quote_date": "2026-07-31",
+    "DTB4WK_discount_yield_pct": 3.63,
+    "investment_quote_date": "2026-07-31",
+    "DGS1MO_investment_yield_pct": 3.78,
+    "estimated_price_per_100": 99.68741666666666,
+    "estimated_RF_discount_ACT360": 0.003135634805128351,
+    "alternative_estimated_RF_investment_ACT365": 0.0032104109589041097,
+    "actual_French_RF": null,
+    "discount_estimate_error_bps": null,
+    "investment_estimate_error_bps": null
+  },
+  "formula": {
+    "primary": "d=prior month-end DTB4WK/100; D=actual calendar days between month ends; P=100*(1-d*D/360); estimated_RF=100/P-1",
+    "alternative": "i=prior month-end DGS1MO/100; estimated_RF_investment=i*D/365; 2026 is not a leap year."
+  },
+  "assumptions": [
+    "Applies the published four-week discount quote to a synthetic D-day bill that matures exactly at the next calendar month end. August uses 31 days. A four-week instrument is not a verified 31-day CUSIP.",
+    "Uses only the last valid quote on or before the preceding month end, with no future-yield input; weekends are covered by that last business-day quote.",
+    "No intra-month mark-to-market, maturity-selection, realized rollover, accrued-cash or actual GBOM index path is observed; the official index return can differ.",
+    "The alternative uses the one-month investment-basis yield and ACT/365 to make quote-convention sensitivity visible. It is not averaged into the primary estimate.",
+    "January-July errors are a diagnostic, not an August confidence interval. No fitted bias correction is applied."
+  ],
+  "january_july_backcheck": {
+    "primary_discount_ACT360": {
+      "n_months": 7,
+      "mean_error_bps": 0.6875533892132356,
+      "mean_absolute_error_bps": 1.2066827955749166,
+      "max_absolute_error_bps": 2.356348051283513,
+      "rmse_bps": 1.405993665999782
+    },
+    "alternative_investment_ACT365": {
+      "n_months": 7,
+      "mean_error_bps": 1.0571428571428598,
+      "mean_absolute_error_bps": 1.5072407045009792,
+      "max_absolute_error_bps": 2.764383561643835,
+      "rmse_bps": 1.6641913187358004
+    },
+    "monthly_rows": [
+      {
+        "month": "2026-01",
+        "period_start": "2025-12-31",
+        "period_end": "2026-01-31",
+        "calendar_days": 31,
+        "discount_quote_date": "2025-12-31",
+        "DTB4WK_discount_yield_pct": 3.59,
+        "investment_quote_date": "2025-12-31",
+        "DGS1MO_investment_yield_pct": 3.74,
+        "estimated_price_per_100": 99.6908611111111,
+        "estimated_RF_discount_ACT360": 0.003100975209195278,
+        "alternative_estimated_RF_investment_ACT365": 0.0031764383561643833,
+        "actual_French_RF": 0.003,
+        "discount_estimate_error_bps": 1.0097520919527796,
+        "investment_estimate_error_bps": 1.7643835616438326
+      },
+      {
+        "month": "2026-02",
+        "period_start": "2026-01-31",
+        "period_end": "2026-02-28",
+        "calendar_days": 28,
+        "discount_quote_date": "2026-01-30",
+        "DTB4WK_discount_yield_pct": 3.63,
+        "investment_quote_date": "2026-01-30",
+        "DGS1MO_investment_yield_pct": 3.72,
+        "estimated_price_per_100": 99.71766666666667,
+        "estimated_RF_discount_ACT360": 0.002831327113550497,
+        "alternative_estimated_RF_investment_ACT365": 0.0028536986301369864,
+        "actual_French_RF": 0.0028000000000000004,
+        "discount_estimate_error_bps": 0.31327113550496527,
+        "investment_estimate_error_bps": 0.5369863013698603
+      },
+      {
+        "month": "2026-03",
+        "period_start": "2026-02-28",
+        "period_end": "2026-03-31",
+        "calendar_days": 31,
+        "discount_quote_date": "2026-02-27",
+        "DTB4WK_discount_yield_pct": 3.63,
+        "investment_quote_date": "2026-02-27",
+        "DGS1MO_investment_yield_pct": 3.74,
+        "estimated_price_per_100": 99.68741666666666,
+        "estimated_RF_discount_ACT360": 0.003135634805128351,
+        "alternative_estimated_RF_investment_ACT365": 0.0031764383561643833,
+        "actual_French_RF": 0.0029,
+        "discount_estimate_error_bps": 2.356348051283513,
+        "investment_estimate_error_bps": 2.764383561643835
+      },
+      {
+        "month": "2026-04",
+        "period_start": "2026-03-31",
+        "period_end": "2026-04-30",
+        "calendar_days": 30,
+        "discount_quote_date": "2026-03-31",
+        "DTB4WK_discount_yield_pct": 3.64,
+        "investment_quote_date": "2026-03-31",
+        "DGS1MO_investment_yield_pct": 3.74,
+        "estimated_price_per_100": 99.69666666666667,
+        "estimated_RF_discount_ACT360": 0.0030425624393994877,
+        "alternative_estimated_RF_investment_ACT365": 0.0030739726027397265,
+        "actual_French_RF": 0.0029,
+        "discount_estimate_error_bps": 1.4256243939948787,
+        "investment_estimate_error_bps": 1.7397260273972672
+      },
+      {
+        "month": "2026-05",
+        "period_start": "2026-04-30",
+        "period_end": "2026-05-31",
+        "calendar_days": 31,
+        "discount_quote_date": "2026-04-30",
+        "DTB4WK_discount_yield_pct": 3.61,
+        "investment_quote_date": "2026-04-30",
+        "DGS1MO_investment_yield_pct": 3.72,
+        "estimated_price_per_100": 99.68913888888889,
+        "estimated_RF_discount_ACT360": 0.0031183047077734116,
+        "alternative_estimated_RF_investment_ACT365": 0.003159452054794521,
+        "actual_French_RF": 0.0031,
+        "discount_estimate_error_bps": 0.1830470777341173,
+        "investment_estimate_error_bps": 0.5945205479452111
+      },
+      {
+        "month": "2026-06",
+        "period_start": "2026-05-31",
+        "period_end": "2026-06-30",
+        "calendar_days": 30,
+        "discount_quote_date": "2026-05-29",
+        "DTB4WK_discount_yield_pct": 3.63,
+        "investment_quote_date": "2026-05-29",
+        "DGS1MO_investment_yield_pct": 3.72,
+        "estimated_price_per_100": 99.69749999999999,
+        "estimated_RF_discount_ACT360": 0.0030341783896288277,
+        "alternative_estimated_RF_investment_ACT365": 0.003057534246575343,
+        "actual_French_RF": 0.0029,
+        "discount_estimate_error_bps": 1.3417838962882789,
+        "investment_estimate_error_bps": 1.57534246575343
+      },
+      {
+        "month": "2026-07",
+        "period_start": "2026-06-30",
+        "period_end": "2026-07-31",
+        "calendar_days": 31,
+        "discount_quote_date": "2026-06-30",
+        "DTB4WK_discount_yield_pct": 3.61,
+        "investment_quote_date": "2026-06-30",
+        "DGS1MO_investment_yield_pct": 3.7,
+        "estimated_price_per_100": 99.68913888888889,
+        "estimated_RF_discount_ACT360": 0.0031183047077734116,
+        "alternative_estimated_RF_investment_ACT365": 0.0031424657534246583,
+        "actual_French_RF": 0.0033,
+        "discount_estimate_error_bps": -1.8169529222658836,
+        "investment_estimate_error_bps": -1.5753424657534172
+      }
+    ]
+  },
+  "sources": [
+    {
+      "id": "DTB4WK",
+      "url": "https://fred.stlouisfed.org/series/DTB4WK",
+      "description": "Federal Reserve H.15: 4-week Treasury bill secondary market rate, bank discount basis."
+    },
+    {
+      "id": "DGS1MO",
+      "url": "https://fred.stlouisfed.org/series/DGS1MO",
+      "description": "Federal Reserve H.15: 1-month Treasury constant maturity yield, investment basis."
+    },
+    {
+      "id": "daily_yield_download",
+      "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=DTB4WK,DGS1MO&cosd=2025-12-01&coed=2026-08-31",
+      "file": "raw/bill_yields_daily_202512_202608.csv",
+      "sha256": "e8ce1c069c6ef10656856f025917ed969d94114615174bbb78f9c35fa2fcf80d"
+    },
+    {
+      "id": "Treasury_pricing_formula",
+      "url": "https://www.treasurydirect.gov/marketable-securities/understanding-pricing/"
+    },
+    {
+      "id": "Treasury_July31_crosscheck",
+      "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?field_tdr_date_value=202607&type=daily_treasury_bill_rates",
+      "observed_20260731_4week_discount_pct": 3.63,
+      "observed_coupon_equivalent_pct": 3.69
+    },
+    {
+      "id": "French_observed_comparison",
+      "url": "https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/ftp/F-F_Research_Data_Factors_CSV.zip",
+      "file": "raw/french_monthly_factors_latest.csv"
+    }
+  ]
+}
