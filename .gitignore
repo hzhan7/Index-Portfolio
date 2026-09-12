@@ -1,5 +1,15 @@
 .DS_Store
 .sites-runtime/
 node_modules/
+
+# Python（scripts/validation/xc、scripts/backfill 运行时生成）
 __pycache__/
-*.pyc
+*.py[cod]
+.pytest_cache/
+.venv/
+
+*.log
+
+# Claude Code：只跟踪 launch.json（python3 -m http.server 8123 --directory docs）；本地设置与 worktrees 不入库
+.claude/*
+!.claude/launch.json

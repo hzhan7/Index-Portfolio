@@ -1,54 +1,87 @@
 # 数据来源与字段
 
-检索：2026-09-11。网站截止：2026-08-31。仅保存本次计算所用的公开月度市场数据及派生结果。
+数据截至 2026-08-31；市场数据检索 2026-09-11，估值锚点价格核对 2026-09-12。仓库保存计算所用的月末观察、1985 年起的含息回填，以及少量推导出的相对市盈率锚点。不自动更新。
 
-## Nasdaq-100
+## 覆盖与状态（`history.json` 的 `coverage`）
 
-- [NDX官网历史](https://indexes.nasdaq.com/Index/History/NDX)，[XNDX官网历史](https://indexes.nasdaq.com/Index/History/XNDX)。页面公开接口：POST `https://indexes.nasdaq.com/Index/HistoryChartData`，表单为`id=NDX`或`XNDX`、`startDate=1985-01-01`、`endDate=2025-12-31`。
-- [XNDX早期历史Excel请求](https://indexes.nasdaq.com/Index/ExportHistory/XNDX?startDate=1985-01-01&endDate=1999-03-31&timeOfDay=EOD)实际只返回1999-03-04及以后20行。
-- [官方指数版本说明](https://indexes.nasdaq.com/docs/NDX%20Versions.pdf)：NDX价格版本Base Value Date为1985-01-31，XNDX总回报版本为1999-03-04。基值日期不替代对实际历史数据的核验。
-- 从接口`x`的UTC毫秒日期和`y`的收盘水平取数据。2012-10-29两序列均有0值，排除该异常观测；未做插值，该日也不是月末。
-- 与旧FRED价格快照存在30个月超过0.011点的差异，集中在2003–2005；本网站采用官网新数据。官网1985–2006年末与[2007年QQQ招股书中的Nasdaq表](https://www.sec.gov/Archives/edgar/data/1067839/000120677407000760/nasdaq_485bpos.htm)22个点的差异不超过0.01点。XNDX与FRED差异仅为保留两位小数的精度级别。
+含息序列是月收益，第一个收益月为 1985-02；点位序列从 1985-01 起。
 
-## S&P 500
+| 序列 id | 区间 | 状态 | source_id | 来源 |
+|---|---|---|---|---|
+| NDX 纳指100 价格 | 1985-01～2026-08 | 实测 observed | `nasdaq_ndx` | Nasdaq 官网 NDX 历史 |
+| SPX 标普500 价格 | 1985-01～2016-08 | 实测 | `crsp_spindx` | CRSP `spindx` 教学公开副本，日度取月末 |
+|  | 2016-09～2026-08 | 实测 | `fred_sp500` | FRED SP500 日收盘取月末 |
+| NDX_TR 纳指100 含息 | 1985-02～1999-03 | 估算 estimated | `nasdaq_div_sec` | 价格月收益 + 年末股息率按月平摊（下文） |
+|  | 1999-04～2026-08 | 实测 | `nasdaq_xndx` | Nasdaq 官网 XNDX 历史 |
+| SPX_TR 标普500 含息 | 1985-02～1988-01 | 构建 constructed | `spx_tr_backfill` | 价格 × CRSP 股息时点，按年校准（下文） |
+|  | 1988-02～2026-08 | 实测 | `yahoo_sp500tr` | Yahoo `^SP500TR` 月末（GitHub 快照；2026 年取 Yahoo 日收盘） |
+| RF 无风险利率 | 1985-01～2026-07 | 实测 | `french_rf` | French 1个月国库券 |
+|  | 2026-08 | 估算 | `rf_estimate` | FRED DTB4WK 暂估（下文） |
+| UST 10年美债 | 1985-01～2026-08 | 模型 model | `fred_dgs10` | DGS10 月末收益率 → 平价10年债模型 |
 
-- 早期价格：[CRSP数据教学公开副本](https://lukestein-classes.github.io/fdap/data/sp500d.csv)，使用`spindx`，从日度记录独立取月末。近期价格：[FRED SP500](https://fred.stlouisfed.org/series/SP500)，从2016-09起覆盖。
-- 含息：[Yahoo ^SP500TR历史的GitHub月末快照](https://github.com/vanexymx/sp500-historical-analysis/blob/main/data/SP500TR_monthly.json)。原始点位从1988-01起；这是二手副本，不是S&P官方直接导出。1985–1987不填值。
+引擎含息口径：纳指100 = `ndx_tr ?? (ndx_pr + ndx_div_<档>)`；标普500 = `spx_tr ?? spx_tr_con`；10年美债 = `bond_tr`。价格口径：`ndx_pr`、`spx_pr`、`bond_pr`。股息预扣税 t：股票月收益减 t ×（含息 − 价格）。
 
-## 国债与无风险收益
+## 纳指100
 
-- [Federal Reserve / FRED DGS10](https://fred.stlouisfed.org/series/DGS10)，取每月最后有效观测，不使用月均收益率。
-- [Swinkels数据集](https://doi.org/10.25397/eur.8152748)，使用2023-01-10第6版ODS中的improved方法；[第6版文件](https://ndownloader.figshare.com/files/38737083)。[2019年论文](https://repub.eur.nl/pub/120274/Repub_120274_O-A.pdf)介绍早期方法，不将两版公式混称同一版。
-- [French因子数据定义](https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/Data_Library/f-f_factors.html)：RF为1个月国库券收益，原始百分数除100。至2024-05来源为Ibbotson；2024-06起为ICE BofA US 1-Month Treasury Bill Index。
+- [NDX 历史](https://indexes.nasdaq.com/Index/History/NDX)、[XNDX 历史](https://indexes.nasdaq.com/Index/History/XNDX)。接口：POST `https://indexes.nasdaq.com/Index/HistoryChartData`，表单 `id=NDX|XNDX`、`startDate=1985-01-01`；取 `x`（UTC 毫秒）与 `y`（收盘）。2012-10-29 两序列为 0，剔除（非月末，不插值）。
+- [指数版本说明](https://indexes.nasdaq.com/docs/NDX%20Versions.pdf)：NDX 基值日 1985-01-31，XNDX 1999-03-04。[XNDX 1985–1999 Excel 请求](https://indexes.nasdaq.com/Index/ExportHistory/XNDX?startDate=1985-01-01&endDate=1999-03-31&timeOfDay=EOD) 只返回 1999-03-04 起 20 行。
+- 与旧 FRED 价格快照有 30 个月差异 > 0.011 点（集中在 2003–2005），采用官网值；官网 1985–2006 年末与 [2007 年 QQQ 招股书表](https://www.sec.gov/Archives/edgar/data/1067839/000120677407000760/nasdaq_485bpos.htm) 22 个点相差 ≤ 0.01 点。
 
-## 网站历史字段
+## 标普500
 
-| 字段 | 单位 / 含义 |
+- 价格：[CRSP 教学公开副本](https://lukestein-classes.github.io/fdap/data/sp500d.csv)（`spindx`）至 2016-08；[FRED SP500](https://fred.stlouisfed.org/series/SP500) 自 2016-09。
+- 含息：[Yahoo `^SP500TR` 月末 GitHub 快照](https://github.com/vanexymx/sp500-historical-analysis/blob/main/data/SP500TR_monthly.json)，点位自 1988-01（二手副本，非 S&P 官方导出）。2026 年用 Yahoo 原始日收盘取月末（8 月末 17219.939453125，7 月末 16763.419921875），与 State Street SSTTX 公布的截至 2026-08-31 基准 1/3/6 个月、QTD、YTD 收益 2.72%、1.68%、12.37%、2.66%、13.14% 吻合；旧快照的“2026-07”实为 7 月 22 日，未用。
+
+## 国债与无风险利率
+
+- [FRED DGS10](https://fred.stlouisfed.org/series/DGS10)：每月最后有效观测（不用月均）。模型（[Swinkels 数据集第 6 版](https://doi.org/10.25397/eur.8152748) improved 方法，[文件](https://ndownloader.figshare.com/files/38737083)）：`D = (1 + y/2)^(−2·(10 − 1/12))`，`bond_pr = (y_prev/y)(1 − D) + D − 1`，`coupon = y_prev/12`，`bond_tr = bond_pr + coupon`。
+- [French RF](https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/Data_Library/f-f_factors.html)：1个月国库券月收益，百分数 ÷ 100；至 2024-05 为 Ibbotson，2024-06 起为 ICE BofA US 1-Month Treasury Bill Index。
+- **2026-08 RF 暂估** 0.003135634805128351 = `1/(1 − 0.0363 × 31/360) − 1`，[DTB4WK](https://fred.stlouisfed.org/series/DTB4WK) 2026-07-31 银行折价年率 3.63%，31 天合成到期券；同法对 2026-01～07 French 值平均绝对差 1.21bp、最大 2.36bp。原始追加文件中 8 月 RF 为空，由 `scripts/extend_202608.py --use-estimated-rf` 显式写入；CSV `RF_status=estimated`，`quality_notes` 与 [data_quality.json](sources/data_quality.json) 标注。依据：[estimated_rf_aug2026.json](sources/extension_202608/estimated_rf_aug2026.json)。French 发布后重建数据。
+
+## 1985 年起的含息回填（[backfill_1985/README.md](sources/backfill_1985/README.md)）
+
+- **纳指100 股息（估算）** `ndx_div_default/low/high`，1985-02～1999-03（170 个月）：QQQ SEC 文件中 Nasdaq 公布的年末股息率（全年现金股息 ÷ 年末成分股总市值；1986 0.33% … 1998 0.07%），`d_m = (y_Y/100 × NDX_Dec(Y)/12) / NDX_(m−1)`。1985 年未公布，假设同 1986；低/高档 ×0.75 / ×1.25。1999–2006 验证：XNDX 实测 / 估算合并 0.835。`python3 scripts/backfill/ndx_dividends.py` 逐字节复现 CSV。
+- **标普500 含息（构建）** `spx_tr_con`，1985-02～1988-01（36 个月）：`TR_m = (1 + PR_m)(1 + k_Y·DIV_m) − 1`，`DIV_m` 为 CRSP 日度 `(1+vwretd)/(1+vwretx) − 1` 月内连乘，`k_Y` 使年度总回报等于 31.73% / 18.67% / 5.25%（1985/86/87，误差 < 1e-12 个百分点）；点位由 SPXTR 1988-01 = 257.47 反向链接，1988-01 月收益 = 257.47/247.08 − 1。方法对 SPXTR 1988-02～2024-12 跟踪误差 0.081%/年。
+- 未提交：CRSP 日度文件与 scipy 校准脚本；`build_data.py` 断言年度校准、1988-01 衔接、与实测不重叠、股息分量非负。
+
+## 相对市盈率锚点（`docs/data/valuation.json`，[valuation/README.md](sources/valuation/README.md)）
+
+`M = 纳指100 市盈率 ÷ 标普500 市盈率`（彭博 PE_RATIO 口径）；`R = 纳指100/标普500 价格比`；相对EPS = `R / M`。
+
+| 层级 | 月份 → M | 说明 |
+|---|---|---|
+| `bbg_label` 实测·彭博 | 2026-08 → 1.4148 | 2026-09-10 标签 37.05 ÷ 26.18 = 1.4152，按 FRED 收盘调整到月末：`M × R(08-31)/R(09-10)`，假设期间 TTM EPS 不变 |
+| `bbg_chart` 实测·彭博 | 2004-12 → 1.6997；2014-12 → 1.3432；2024-12 → 1.3531 | 用户彭博相对市盈率图季末读数 |
+| `bridge` 估算 | 1985-01 → 2.0143；1994-12 → 1.7639；2004-12 → 1.6944 | BetaShares 2016 顾问材料 NDX 市盈率图 ÷ Shiller 标普500 市盈率，`M = M_raw × e^0.14`（2003–2015 重叠期对彭博口径的对数差） |
+| `estimate` 估算区间 | 1985-01 → 1.8～2.5 | 彭博口径 p10～p90；中值 = bridge 1985-01 |
+
+分段：d1985、d1995 为 bridge→bridge；d2005、d2015 为 bbg_chart→bbg_chart；d2025 为 bbg_chart→bbg_label。相邻分段只在 2004-12 换层级（bridge→bbg_chart），十年分段相加与全期（1985-01 中值 → 2026-08）的市盈率项相差 +0.31 对数点（口径拼接差，`build_data.py` 断言 ≤ 2）。FRED 原始下载：`sources/valuation/fred_NASDAQ100_…csv`、`fred_SP500_…csv`。
+
+## 字段（`docs/data/history.json` `observations`，500 行 1985-01～2026-08）
+
+| 字段 | 含义 |
 |---|---|
-| month | YYYY-MM，月末观察标签 |
-| NDX / SPX | 股票价格指数点位 |
-| XNDX / SPXTR | 股息再投资总回报指数点位；缺失留空 |
-| ndx_pr / spx_pr | 股票价格月收益，小数 |
-| ndx_tr / spx_tr | 股票含股息月收益，小数 |
-| bond_tr | 模型国债含票息月收益，小数 |
-| bond_pr | 模型国债不含票息月收益，小数 |
-| coupon | 上月末年化DGS10（小数）/12，小数月收益 |
-| RF | 同期1个月国库券收益，小数月收益 |
-| dgs10_pct | 月末10年期国债年化收益率，百分数 |
+| month | YYYY-MM 月末 |
+| NDX / SPX | 价格指数点位 |
+| XNDX / SPXTR | 含息指数点位；缺失为 null |
+| ndx_pr / spx_pr | 价格月收益（小数） |
+| ndx_tr / spx_tr | 实测含息月收益 |
+| ndx_div_default / _low / _high | 纳指100 估算月股息收益，仅 1985-02～1999-03 |
+| spx_tr_con | 标普500 构建含息月收益，仅 1985-02～1988-01 |
+| bond_pr / bond_tr / coupon | 模型国债价格 / 含票息月收益；coupon = 上月末 DGS10/12 |
+| RF | 1个月国库券月收益 |
+| dgs10_pct | 月末 DGS10（百分数） |
 
-原始月末观察文件还保留实际收盘/收益率日期。各资产独立采样，不要求股票交易日与国债报价日完全一致。
+顶层：`schemaVersion: 2`、`as_of`、`retrieved`、`coverage`、`sources`（按 id）、`quality_notes`（RF 暂估按 `month`；回填按 `from`/`to`）。`monthly_history.csv` 另含 `RF_status`、回填列、`ndx_tr_ext`/`spx_tr_ext`（默认档含息月收益）与 `ndx_tr_status`/`spx_tr_status`。v1 字段 1985-01～2025-12 数值与 schemaVersion 1 逐项一致（`tests/data.test.js` 哈希校验）。
 
-`scripts/build_data.py`重新从月末点位计算股票月收益，并从DGS10计算国债收益；不会直接信任旧收益列。历史数据文件以SHA256记录版本，独立优化验证记录对应输入哈希。
+## 重建与校验
 
-## 2026年1—8月增量
+- `python3 scripts/build_data.py`（仅标准库，幂等）：由 `data/sources/**` 生成 `history.json`、`monthly_history.csv`、`valuation.json`、`data/manifest.json`（`data/sources`、`docs/data` 全部文件字节数与 SHA256）。
+- 数据变更后必须重跑 `python3 scripts/validation/crosscheck_v2.py`，否则 `tests/crosscheck.test.js` 因输入哈希不符失败。
+- 原始月末观察：[nasdaq_monthly.csv](sources/nasdaq_monthly.csv)、[sp500_treasury_monthly.csv](sources/sp500_treasury_monthly.csv)（含实际观察日期；各资产独立采样）；2026 年增量与审计：[extension_202608/](sources/extension_202608/)。
 
-旧数据与优化代码不变，仅追加八个完整月份。NDX/XNDX官网请求范围为2025-12-01至2026-08-31，12月观察与原数据一致。SPX价格使用FRED实际日收盘；SPXTR使用Yahoo `^SP500TR` 原始日收盘，8月末为17219.939453125，7月末为16763.419921875。State Street SSTTX实际下载页面公布的截至2026-08-31标普基准1/3/6月、QTD与YTD收益分别为2.72%、1.68%、12.37%、2.66%、13.14%，与该序列吻合。旧GitHub快照的“2026-07”实际为7月22日，未用于本次月末序列。
+## 许可
 
-2026年1—7月RF取French新下载的正式月文件（美国及国际文件一致）；8月尚缺正式RF。8月**暂估**为0.003135634805128351，采用FRED/H.15于7月31日发布的四周国库券银行折价年率3.63%，按31天合成到期券估算：`1/(1-0.0363*31/360)-1`。四周报价并非实际31天CUSIP，故该值不是实际GBOM指数回报。估计方法前七个月相对French已公布值的平均绝对差约1.21bp，最大约2.36bp；这只是历史诊断，不是8月置信区间。
-
-- [DTB4WK报价与单位](https://fred.stlouisfed.org/series/DTB4WK)
-- [TreasuryDirect国库券定价](https://www.treasurydirect.gov/marketable-securities/understanding-pricing/)
-- [数据质量标记](sources/data_quality.json)：JSON中保留observed_value=null与effective_value。
-- [新增来源、观测与审计](sources/extension_202608/)：原始RF追加文件中8月仍为空；主分析表由明确选择的临时估计补齐。
-
-CSV的`RF_status`列区分observed与estimated；网站选择包含2026-08的期间时显示暂估说明。旧验证文件的输入哈希对应其生成时的2025年末数据版本，新数据保留旧492个月的全部数值。
+- 指数、交易所、FRED、French、Yahoo 数据权利归各来源；本项目不新增许可，不担保再分发权。
+- SEC EDGAR 公开文件；CRSP 仅用教学公开副本，仓库只存 36 个月派生点位；Wikipedia、Berkshire、SBBI、Damodaran 只作校准目标或对照。
+- 彭博与 BetaShares 材料：仅发布 7 个推导比值与 2 个市盈率标签，不保存任何月度供应商序列；BetaShares 材料标注不得分发，不在仓库中。

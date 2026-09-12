@@ -1,11 +1,37 @@
 {
   "retrieved": "2026-09-11",
+  "valuation_retrieved": "2026-09-12",
   "data_through": "2026-08-31",
   "rf_observed_through": "2026-07",
   "estimated_rf_months": [
     "2026-08"
   ],
   "files": [
+    {
+      "path": "data/sources/backfill_1985/README.md",
+      "bytes": 5308,
+      "sha256": "a419f58e7e11a6d4479febb8965ae2a80c4452d6915fb42b5a967e917060d664"
+    },
+    {
+      "path": "data/sources/backfill_1985/ndx_dividend_backfill_1985_1999.csv",
+      "bytes": 21776,
+      "sha256": "912126ddcfdedbc33a11fbdc1b04bb435ae0a028006bc7c1d02f32e1a47a6a98"
+    },
+    {
+      "path": "data/sources/backfill_1985/ndx_yearend_dividend_yield_sec.csv",
+      "bytes": 2339,
+      "sha256": "e9b38579d2f291aa537b33137cf6021ed16aa3333711559b7d1b4a8daa2a6dbd"
+    },
+    {
+      "path": "data/sources/backfill_1985/spxtr_backfill_1985_1987_recommended.csv",
+      "bytes": 7409,
+      "sha256": "bdb645b25021d484d04bd448a92825f6bf6c587e67cda1c33c6985ecbe6cac4c"
+    },
+    {
+      "path": "data/sources/data_quality.json",
+      "bytes": 404,
+      "sha256": "18c671ac524c106329405b93ee757a13f3721d00c27ea460ebfd9706bf9d62a8"
+    },
     {
       "path": "data/sources/extension_202608/bill_yields.csv",
       "bytes": 111079,
@@ -17,9 +43,19 @@
       "sha256": "488cfa0f0e619956951bc3d684668f9661d816b45e563caf68b3ada8e35acae3"
     },
     {
+      "path": "data/sources/extension_202608/estimated_rf_aug2026.json",
+      "bytes": 8727,
+      "sha256": "77bc401257e1c6e4b805e3511337176bb39c5a4e4606451dd123a88fff6af0b3"
+    },
+    {
       "path": "data/sources/extension_202608/nasdaq_append.csv",
       "bytes": 945,
       "sha256": "f308159ad23bce241fd9c7a7caa1174090ca50f69d4403437588ffcce06a366d"
+    },
+    {
+      "path": "data/sources/extension_202608/nasdaq_source_manifest.json",
+      "bytes": 1963,
+      "sha256": "6a4b31fca216e3125d7a2ea178c955d592fc98f61999ff349ac8f86ca88eb654"
     },
     {
       "path": "data/sources/extension_202608/rf_bond_append.csv",
@@ -32,6 +68,11 @@
       "sha256": "1dba310cad49552f19964aed462906a70ca595f058583283becfe2b8f65e4600"
     },
     {
+      "path": "data/sources/extension_202608/sp500_source_audit.json",
+      "bytes": 4474,
+      "sha256": "052c828e49f3656ec162742915ceaa4a984c660fb7b299f467cb57a6d0646724"
+    },
+    {
       "path": "data/sources/nasdaq_monthly.csv",
       "bytes": 40537,
       "sha256": "afa2bc868dc082dca0f65b1fa5a038a381a0f63b653cc4e03f44e4053c6a8230"
@@ -42,34 +83,39 @@
       "sha256": "b5e4306b965a3ace81ef3c1cf63c6cba487c7a54e30c016db562207909efb93b"
     },
     {
-      "path": "data/sources/data_quality.json",
-      "bytes": 404,
-      "sha256": "18c671ac524c106329405b93ee757a13f3721d00c27ea460ebfd9706bf9d62a8"
+      "path": "data/sources/valuation/README.md",
+      "bytes": 2218,
+      "sha256": "4279e0cc5caebd22e8290033baf60be168231298a03e61d14ecc5ad44bbc93dc"
     },
     {
-      "path": "data/sources/extension_202608/estimated_rf_aug2026.json",
-      "bytes": 8727,
-      "sha256": "77bc401257e1c6e4b805e3511337176bb39c5a4e4606451dd123a88fff6af0b3"
+      "path": "data/sources/valuation/fred_NASDAQ100_2026-08-25_2026-09-12.csv",
+      "bytes": 300,
+      "sha256": "0c6a7a4f5b6080b597c98c511790b9dfc4035b6a77ec7e600e5280e4764b5313"
     },
     {
-      "path": "data/sources/extension_202608/nasdaq_source_manifest.json",
-      "bytes": 1963,
-      "sha256": "6a4b31fca216e3125d7a2ea178c955d592fc98f61999ff349ac8f86ca88eb654"
+      "path": "data/sources/valuation/fred_SP500_2026-08-25_2026-09-12.csv",
+      "bytes": 282,
+      "sha256": "3d43722685cc60979627c41df5e576fabc39910430255216e78dc3a63ed786b1"
     },
     {
-      "path": "data/sources/extension_202608/sp500_source_audit.json",
-      "bytes": 4474,
-      "sha256": "052c828e49f3656ec162742915ceaa4a984c660fb7b299f467cb57a6d0646724"
+      "path": "data/sources/valuation/relative_pe_inputs.json",
+      "bytes": 2633,
+      "sha256": "a79cd39b5c7f3ce1d6081c5168e35a0d1ab8deb38de1bb4d6cceae78d925195b"
     },
     {
       "path": "docs/data/history.json",
-      "bytes": 159489,
-      "sha256": "d07dad755486d6fc5fd8eb9c2810e3a06ccc75304d963c77cbe7f9601ce16248"
+      "bytes": 207884,
+      "sha256": "25b1666d433cff2f601b1e7f70eccd0c4a74449d4cc5920ef293a006c2162106"
     },
     {
       "path": "docs/data/monthly_history.csv",
-      "bytes": 101964,
-      "sha256": "46d1934dc02e82d273a620001b413a148656d3ff25f4b76cde2c7a9d69035517"
+      "bytes": 140780,
+      "sha256": "a3eb3624c306403f882554551c25b82feaf361ddf0e63d70f474f1edacf58e5d"
+    },
+    {
+      "path": "docs/data/valuation.json",
+      "bytes": 4875,
+      "sha256": "91126b4760283b8901d79d72eeea8798fdd849738815d18cbc68f6a4d17220ed"
     }
   ]
 }

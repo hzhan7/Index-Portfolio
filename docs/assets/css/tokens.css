@@ -1,0 +1,140 @@
+/* Design tokens (SHELL owns; CHARTS and SECTIONS only read).
+   Palette from the dataviz reference palette; no red anywhere.
+   Ramps are anchored at the surface: step 100 recedes toward the surface and the top step
+   has the most contrast, so dark mode flips the hex order ("sequential flips anchor in dark").
+   Checked with validate_palette.js --ordinal: seq ramps monotone in both modes; gray ramps
+   (CHARTS-validated) monotone with adjacent ΔL ≥ 0.06 and steps 200–500 clear the 2:1 ordinal
+   floor as coverage fills; dark --c-mid #504f4b is ΔE 8.8 from axis #383835, 13.5 from grid #2c2c2a. */
+:root {
+  color-scheme: light dark;
+
+  --page: #f9f9f7;
+  --surface: #fcfcfb;
+  --ink: #0b0b0b;
+  --ink-2: #52514e;
+  --muted: #898781; /* non-text marks only */
+  --grid: #e1e0d9;
+  --axis: #c3c2b7;
+  --border: rgba(11, 11, 11, 0.10);
+
+  --c-ndx: #2a78d6;
+  --c-spx: #eb6834;
+  --c-ust: #1baf7a;
+  --c-pos: #2a78d6;
+  --c-neg: #eb6834;
+  --c-mid: #f0efec;
+
+  --seq-100: #cde2fb;
+  --seq-150: #b7d3f6;
+  --seq-200: #9ec5f4;
+  --seq-250: #86b6ef;
+  --seq-300: #6da7ec;
+  --seq-350: #5598e7;
+  --seq-400: #3987e5;
+  --seq-450: #2a78d6;
+  --seq-500: #256abf;
+  --seq-550: #1c5cab;
+  --seq-600: #184f95;
+  --seq-650: #104281;
+  --seq-700: #0d366b;
+
+  --gray-100: #e1e0d9;
+  --gray-200: #a6a49c;
+  --gray-300: #898781;
+  --gray-400: #6e6c67;
+  --gray-500: #52514e;
+
+  /* UI roles */
+  --focus: #2a78d6;
+  --warn: #fab219; /* fixed status amber, always paired with an icon + text */
+  --wash: rgba(11, 11, 11, 0.05);
+  --wash-strong: rgba(11, 11, 11, 0.09);
+  --backdrop: rgba(11, 11, 11, 0.32);
+  --inverse-bg: #0b0b0b;
+  --inverse-ink: #fcfcfb;
+  --shadow: 0 1px 2px rgba(11, 11, 11, 0.06), 0 8px 24px rgba(11, 11, 11, 0.10);
+
+  --font: system-ui, -apple-system, "PingFang SC", "Hiragino Sans GB", "Noto Sans SC", "Microsoft YaHei", sans-serif;
+  --fs-xs: 12px;
+  --fs-sm: 13px;
+  --fs-md: 15px;
+  --fs-lg: 17px;
+  --fs-xl: 22px;
+  --fs-2xl: 28px;
+  --fs-3xl: 34px;
+
+  /* 8px grid */
+  --s-1: 4px;
+  --s-2: 8px;
+  --s-3: 12px;
+  --s-4: 16px;
+  --s-5: 24px;
+  --s-6: 32px;
+  --s-7: 48px;
+  --s-8: 64px;
+
+  --radius: 12px;
+  --radius-sm: 8px;
+  --radius-pill: 999px;
+  --max-w: 1180px;
+  --bar-h: 56px;
+  --control-h: 32px;
+  --touch: 44px;
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+@media (max-width: 767.98px) {
+  :root {
+    --bar-h: 44px;
+    --control-h: 44px;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --page: #0d0d0d;
+    --surface: #1a1a19;
+    --ink: #ffffff;
+    --ink-2: #c3c2b7;
+    --muted: #898781;
+    --grid: #2c2c2a;
+    --axis: #383835;
+    --border: rgba(255, 255, 255, 0.10);
+
+    --c-ndx: #3987e5;
+    --c-spx: #d95926;
+    --c-ust: #199e70;
+    --c-pos: #3987e5;
+    --c-neg: #d95926;
+    --c-mid: #504f4b;
+
+    --seq-100: #0d366b;
+    --seq-150: #104281;
+    --seq-200: #184f95;
+    --seq-250: #1c5cab;
+    --seq-300: #256abf;
+    --seq-350: #2a78d6;
+    --seq-400: #3987e5;
+    --seq-450: #5598e7;
+    --seq-500: #6da7ec;
+    --seq-550: #86b6ef;
+    --seq-600: #9ec5f4;
+    --seq-650: #b7d3f6;
+    --seq-700: #cde2fb;
+
+    --gray-100: #383835;
+    --gray-200: #54534f;
+    --gray-300: #6e6c67;
+    --gray-400: #898781;
+    --gray-500: #a6a49c;
+
+    --focus: #3987e5;
+    --warn: #fab219;
+    --wash: rgba(255, 255, 255, 0.06);
+    --wash-strong: rgba(255, 255, 255, 0.11);
+    --backdrop: rgba(0, 0, 0, 0.56);
+    --inverse-bg: #ffffff;
+    --inverse-ink: #0b0b0b;
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.40), 0 8px 24px rgba(0, 0, 0, 0.45);
+  }
+}
