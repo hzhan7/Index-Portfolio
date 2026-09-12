@@ -1,0 +1,150 @@
+/* Section-specific layout (SECTIONS lane). Colors come only from tokens.css; component basics live in app.css. */
+
+.subhead { margin: 24px 0 8px; font-size: 1rem; font-weight: 600; color: var(--ink); }
+.section-answer p { margin: 0 0 8px; font-size: 1.0625rem; line-height: 1.6; color: var(--ink); }
+.section-error { color: var(--ink); border-left: 3px solid var(--c-spx); padding-left: 8px; }
+.param-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; margin: 8px 0; }
+.param-label { font-size: 0.875rem; color: var(--ink-2); }
+.param-sub { margin: 4px 0 0; }
+.cell-sub { display: block; font-size: 0.75rem; font-weight: 400; color: var(--ink-2); white-space: nowrap; }
+.group-row th { text-align: left; font-weight: 600; color: var(--ink-2); background: var(--page); }
+.row-total th, .row-total td { font-weight: 600; border-top: 1px solid var(--axis); }
+.row-splice th, .row-splice td, .row-muted th, .row-muted td { color: var(--ink-2); }
+.num-input { width: 5.5em; min-width: 0; min-height: 44px; padding: 0 8px; border: 1px solid var(--border); border-radius: 8px; background: var(--surface); color: var(--ink); font: inherit; }
+
+/* Charts */
+.chart-figure { margin: 16px 0 0; min-width: 0; }
+.chart-figure__title { margin: 0 0 8px; font-size: 0.9375rem; font-weight: 600; color: var(--ink); }
+.chart-figure .chart { position: relative; width: 100%; min-height: 240px; }
+.chart--weightBar { min-height: 48px; }
+.chart--coverageStrip { min-height: 120px; }
+.data-toggle { margin-top: 8px; }
+.data-toggle__panel { margin-top: 8px; }
+.data-toggle__panel .btn { margin-top: 8px; }
+
+/* §0 Hero */
+.hero__names { margin: -4px 0 4px; font-size: 0.875rem; color: var(--ink-2); }
+.hero__answer { margin: 8px 0 4px; font-size: 1.25rem; line-height: 1.5; font-weight: 600; color: var(--ink); }
+.hero__meta { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; margin: 0 0 16px; font-size: 0.875rem; color: var(--ink-2); }
+.hero__meta-line { min-width: 0; }
+.nowrap { white-space: nowrap; }
+.methods__sources .cell-sub { white-space: normal; }
+.hero__cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.hero-card { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.hero-card .card__eyebrow { margin: 0; }
+.hero-card .card__value { margin: 4px 0; font-size: 28px; line-height: 1.2; font-weight: 600; font-variant-numeric: proportional-nums; color: var(--ink); }
+.hero-card__lines .card__line { margin: 0; line-height: 1.5; }
+.hero-card__small { margin: 0; font-size: 0.8125rem; color: var(--ink-2); }
+.hero-card__foot { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: auto; padding-top: 8px; }
+.hero-card__prov { display: flex; gap: 4px; }
+
+/* §1 Compare */
+.table--kpi th[scope='row'] { text-align: left; font-weight: 400; }
+.table--kpi td.num, .table--periods td.num, .table--bars td.num { text-align: right; }
+.kpi-span td, .kpi-span th { text-align: left; font-weight: 400; color: var(--ink-2); }
+.compare__rolling { margin-top: 24px; }
+.compare__annotation { margin: 8px 0 0; }
+.compare__periods { margin-top: 24px; }
+
+/* §2 Decomposition */
+.decomp__formula { margin: 8px 0 16px; }
+.decomp__table { margin-top: 8px; }
+.table--bars td.num { min-width: 7em; }
+.decomp__slider { margin-top: 24px; max-width: 640px; }
+.range__zone--band { background: var(--seq-100); }
+.range__track input[type='range'] { position: relative; } /* paint the thumb above absolutely positioned zones */
+.m0-ticks { position: relative; height: 20px; }
+.m0-ticks__tick { position: absolute; left: var(--x); transform: translateX(-50%); font-size: 0.75rem; color: var(--ink-2); white-space: nowrap; }
+.m0-ticks__tick::before { content: ''; position: absolute; left: 50%; top: -6px; width: 1px; height: 6px; background: var(--axis); }
+.m0-ticks__note { margin: 2px 0 8px; }
+.decomp__readout { margin: 0; font-weight: 600; color: var(--ink); }
+.bbg { margin-top: 24px; border-top: 1px solid var(--border); padding-top: 12px; }
+.bbg summary { min-height: 44px; display: flex; align-items: center; cursor: pointer; color: var(--ink); font-weight: 600; }
+.bbg__recipe { max-height: 240px; overflow: auto; padding: 12px; border-radius: 8px; background: var(--page); color: var(--ink); font-size: 0.8125rem; white-space: pre-wrap; }
+.bbg__inputs { display: grid; gap: 8px; margin: 12px 0; }
+.bbg__paste { width: 100%; min-width: 0; padding: 8px; border: 1px solid var(--border); border-radius: 8px; background: var(--surface); color: var(--ink); font: inherit; }
+.bbg__issues { margin: 4px 0; padding-left: 20px; }
+
+/* §3 Allocation */
+.table--asked tbody tr[tabindex] { cursor: pointer; }
+.table--asked tbody tr[tabindex]:hover th, .table--asked tbody tr[tabindex]:hover td,
+.table--asked tbody tr[tabindex]:focus-visible th, .table--asked tbody tr[tabindex]:focus-visible td { background: var(--page); }
+.table--asked tr.is-active th { box-shadow: inset 3px 0 0 var(--ink); }
+.alloc-tabbar { margin: 24px 0 12px; }
+.alloc-tabs-select { display: none; }
+.alloc-panel { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; align-items: start; }
+.alloc-params .params { display: grid; grid-template-columns: minmax(0, 1fr); gap: 8px; } /* an auto track lets a wide table widen the page instead of scrolling */
+.infeasible { padding: 8px 12px; border-radius: 8px; background: var(--gray-100); color: var(--ink); }
+.infeasible .note { margin: 0 0 8px; }
+.capm { margin-top: 8px; }
+.table--capm tbody th { min-width: 10em; } /* row labels carry rates; scroll the table instead of wrapping them per character */
+.capm__caption { margin: 8px 0 0; }
+.custom-row { display: flex; align-items: flex-end; gap: 8px; }
+.custom-row .range { flex: 1; min-width: 0; }
+.custom-row__fill { margin: 0; padding: 8px 0; color: var(--ink-2); }
+.result { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.result .card__eyebrow { margin: 0; }
+.result__weights { margin: 0; font-size: 28px; font-weight: 600; line-height: 1.2; color: var(--ink); }
+.result__chips { display: flex; flex-wrap: wrap; gap: 4px; }
+.result__head { margin: 0; }
+.result__metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px 16px; }
+.metric { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.metric__label { font-size: 0.8125rem; color: var(--ink-2); }
+.metric__value { font-size: 1.25rem; font-weight: 600; color: var(--ink); }
+.metric__delta { font-size: 0.8125rem; color: var(--ink); }
+.result__extra { margin: 0; color: var(--ink-2); }
+.alloc-charts { margin-top: 24px; gap: 16px; }
+.alloc-ternary .seg { margin-top: 16px; }
+
+/* §4 Robust */
+.robust__progress { margin: 0 0 8px; }
+.robust__wf .chart-figure + .chart-figure { margin-top: 0; }
+.robust__wf .chart--stackedArea { min-height: 140px; }
+.robust__stats { margin-top: 12px; }
+.table--wf td.num { text-align: right; }
+.whisker-rows { display: grid; gap: 4px; }
+.whisker-row { margin: 0; }
+
+/* §5 Methods */
+.methods { display: grid; gap: 8px; }
+.methods__block .subhead { margin-top: 16px; }
+.methods__list { margin: 0; padding-left: 20px; display: grid; gap: 4px; line-height: 1.5; }
+.methods__formulas li { font-size: 0.875rem; }
+.methods__sources a { color: var(--ink); }
+
+@media (max-width: 899px) {
+  .alloc-panel { grid-template-columns: minmax(0, 1fr); }
+}
+
+@media (max-width: 767px) {
+  .hero__answer { font-size: 1.0625rem; }
+  .hero__cards { grid-template-columns: minmax(0, 1fr); gap: 8px; }
+  /* compact verdict card: eyebrow and 依据 share the first row, then the big value and one line */
+  .hero-card { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 2px 8px; min-height: 0; padding: 10px 14px; }
+  .hero-card > * { grid-column: 1 / -1; }
+  .hero-card > .card__eyebrow { grid-column: 1; grid-row: 1; }
+  .hero-card > .hero-card__foot { grid-column: 2; grid-row: 1; margin: -10px -8px -10px 0; padding: 0; }
+  .hero-card .card__value { margin: 0; font-size: clamp(17px, 5vw, 22px); line-height: 1.25; }
+  .hero-card__lines .card__line + .card__line, .hero-card__small, .hero-card__prov { display: none; }
+  .result__weights { font-size: 22px; }
+  /* wide tables scroll inside their container with the row names pinned */
+  .table-scroll .table:not(.table--kpi) tbody th:first-child,
+  .table-scroll .table:not(.table--kpi) thead tr:first-child th:first-child { position: sticky; left: 0; z-index: 1; background: var(--page); }
+}
+
+@media (max-width: 599px) {
+  .alloc-tabs { display: none; }
+  .alloc-tabs-select { display: block; }
+  .custom-row { flex-wrap: wrap; }
+  /* §1 KPI table stacks per metric: name on its own line, then 纳指100 | 标普500 | 差值 side by side */
+  .table--kpi, .table--kpi tbody { display: block; }
+  .table--kpi caption { display: block; }
+  .table--kpi thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .table--kpi tr { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2px 8px; padding: 8px 0; border-bottom: 1px solid var(--grid); }
+  .table--kpi tr > th, .table--kpi tr > td { display: block; padding: 0; border: 0; }
+  .table--kpi tbody th[scope] { grid-column: 1 / -1; font-weight: 600; }
+  .table--kpi tbody .kpi-span th[scope] { font-weight: 400; }
+  .table--kpi td.num { text-align: left; white-space: normal; }
+  .table--kpi td[data-label]::before { content: attr(data-label); display: block; font-size: 0.75rem; font-weight: 400; color: var(--ink-2); }
+  .table--kpi .cell-sub { white-space: normal; }
+}

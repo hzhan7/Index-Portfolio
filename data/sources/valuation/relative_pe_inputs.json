@@ -1,0 +1,28 @@
+{
+  "retrieved": "2026-09-12",
+  "definition": "M = 纳指100市盈率 ÷ 标普500市盈率（彭博 PE_RATIO 口径）；相对EPS = 纳指/标普价格比 ÷ M",
+  "basis_shift_ln": 0.14,
+  "anchors": [
+    {"month": "1985-01", "tier": "bridge", "M_raw": 1.7511194722796861, "alignment": "shift", "source_id": "bridge"},
+    {"month": "1994-12", "tier": "bridge", "M_raw": 1.5334786204193611, "alignment": "shift", "source_id": "bridge"},
+    {"month": "2004-12", "tier": "bridge", "M_raw": 1.4730375995527756, "alignment": "shift", "source_id": "bridge"},
+    {"month": "2004-12", "tier": "bbg_chart", "M_raw": 1.6996699669966977, "alignment": "quarter_end", "source_id": "bbg_chart"},
+    {"month": "2014-12", "tier": "bbg_chart", "M_raw": 1.3432343234323416, "alignment": "quarter_end", "source_id": "bbg_chart"},
+    {"month": "2024-12", "tier": "bbg_chart", "M_raw": 1.3531353135313515, "alignment": "quarter_end", "source_id": "bbg_chart"}
+  ],
+  "label": {"labelDate": "2026-09-10", "ndx_pe_label": 37.05, "spx_pe_label": 26.18, "M_label": 1.4152, "tier": "bbg_label", "source_id": "bbg_user"},
+  "m0_1985": {"low": 1.8, "high": 2.5, "tier": "estimate", "source_id": "bridge"},
+  "fred_closes": {
+    "NASDAQ100": "fred_NASDAQ100_2026-08-25_2026-09-12.csv",
+    "SP500": "fred_SP500_2026-08-25_2026-09-12.csv"
+  },
+  "sources": {
+    "bbg_user": {"title": "彭博终端 PE_RATIO（用户截图，2026-09-10）", "url": null, "note": "纳指100 与 标普500 市盈率标签之比；按 FRED 收盘价调整到数据月末，假设期间 TTM EPS 不变"},
+    "bbg_chart": {"title": "彭博相对市盈率图（用户截图季度读数）", "url": null, "note": "季末读数；只发布 2004-12、2014-12、2024-12 三个比值"},
+    "bridge": {"title": "第三方图表读数（BetaShares 2016 顾问材料，数据 Bloomberg/Thomson Reuters）÷ Shiller 标普500市盈率", "url": null, "note": "仅发布推导出的锚点；按 2003–2015 重叠期平移 +0.14 ln 到彭博口径"},
+    "shiller": {"title": "Robert Shiller, U.S. Stock Markets 1871–Present", "url": "https://shillerdata.com/", "note": "as-reported TTM EPS"},
+    "fred_daily": {"title": "FRED NASDAQ100 / SP500 日收盘", "url": "https://fred.stlouisfed.org/series/NASDAQ100", "note": "核对月末收盘并计算标签日到月末的价格比变化；SP500 见 https://fred.stlouisfed.org/series/SP500"}
+  },
+  "tiers": {"bbg_label": "实测·彭博", "bbg_chart": "实测·彭博", "bridge": "估算", "estimate": "估算区间"},
+  "licence_note": "仅发布少量推导出的相对市盈率锚点，不发布任何月度供应商序列。"
+}

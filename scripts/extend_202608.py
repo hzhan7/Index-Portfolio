@@ -1,4 +1,8 @@
-"""Append verified Jan-Aug 2026 observations; an estimated August RF requires an explicit flag."""
+"""One-off (applied in d907738): append verified Jan-Aug 2026 observations; an estimated August RF requires a flag.
+
+Re-running appends nothing (months already present) and rewrites only its own 2026 RF notes in data_quality.json;
+other notes are kept. The 1985 backfill range notes are added by scripts/build_data.py, not stored here.
+"""
 import argparse
 import csv
 import json
@@ -61,5 +65,8 @@ def append(path,fields,existing,records):
 
 append(SOURCE/'nasdaq_monthly.csv',ndx_fields,ndx,[n_new[m] for m in months])
 append(SOURCE/'sp500_treasury_monthly.csv',other_fields,other,rows)
-(SOURCE/'data_quality.json').write_text(json.dumps(dict(notes=quality),ensure_ascii=False,indent=2)+'\n')
+quality_path=SOURCE/'data_quality.json'
+kept=[q for q in (json.loads(quality_path.read_text())['notes'] if quality_path.exists() else [])
+      if not (q.get('field')=='RF' and q.get('month') in months)]
+quality_path.write_text(json.dumps(dict(notes=kept+quality),ensure_ascii=False,indent=2)+'\n')
 print('Appended eight months; provisional RF values:',quality)
