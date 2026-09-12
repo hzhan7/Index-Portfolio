@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "inputSha256": "1450ffed20e5ca0ae8e2c8d6f2d1f8c95240d11128fdd13b34ed2ebb6a1a57ad",
+  "inputSha256": "d07dad755486d6fc5fd8eb9c2810e3a06ccc75304d963c77cbe7f9601ce16248",
   "cases": [
     {
       "id": "1985_2025_stock_PR_bond_TR",
@@ -14,7 +14,7 @@
       },
       "source": {
         "inputFile": "docs/data/history.json",
-        "asOf": "2025-12-31",
+        "asOf": "2026-08-31",
         "retrieved": "2026-09-11"
       },
       "period": {
@@ -179,7 +179,7 @@
         "profileCalls": 975,
         "cagrEqualityTolerance": 1e-9,
         "sharpeEqualityTolerance": 3e-9,
-        "elapsedMs": 22.964499999999997
+        "elapsedMs": 21.258416
       }
     },
     {
@@ -194,7 +194,7 @@
       },
       "source": {
         "inputFile": "docs/data/history.json",
-        "asOf": "2025-12-31",
+        "asOf": "2026-08-31",
         "retrieved": "2026-09-11"
       },
       "period": {
@@ -359,7 +359,7 @@
         "profileCalls": 1030,
         "cagrEqualityTolerance": 1e-9,
         "sharpeEqualityTolerance": 3e-9,
-        "elapsedMs": 19.553166999999995
+        "elapsedMs": 19.066709000000003
       }
     },
     {
@@ -374,7 +374,7 @@
       },
       "source": {
         "inputFile": "docs/data/history.json",
-        "asOf": "2025-12-31",
+        "asOf": "2026-08-31",
         "retrieved": "2026-09-11"
       },
       "period": {
@@ -539,7 +539,7 @@
         "profileCalls": 920,
         "cagrEqualityTolerance": 1e-9,
         "sharpeEqualityTolerance": 3e-9,
-        "elapsedMs": 7.937709000000005
+        "elapsedMs": 7.999457999999997
       }
     },
     {
@@ -554,7 +554,7 @@
       },
       "source": {
         "inputFile": "docs/data/history.json",
-        "asOf": "2025-12-31",
+        "asOf": "2026-08-31",
         "retrieved": "2026-09-11"
       },
       "period": {
@@ -719,7 +719,7 @@
         "profileCalls": 975,
         "cagrEqualityTolerance": 1e-9,
         "sharpeEqualityTolerance": 3e-9,
-        "elapsedMs": 7.501833000000005
+        "elapsedMs": 7.380042000000003
       }
     },
     {
@@ -734,7 +734,7 @@
       },
       "source": {
         "inputFile": "docs/data/history.json",
-        "asOf": "2025-12-31",
+        "asOf": "2026-08-31",
         "retrieved": "2026-09-11"
       },
       "period": {
@@ -899,7 +899,7 @@
         "profileCalls": 975,
         "cagrEqualityTolerance": 1e-9,
         "sharpeEqualityTolerance": 3e-9,
-        "elapsedMs": 22.752375
+        "elapsedMs": 22.776875000000004
       }
     }
   ]

@@ -1,7 +1,7 @@
 {
   "status": "passed",
   "inputFile": "docs/data/history.json",
-  "inputSha256": "1450ffed20e5ca0ae8e2c8d6f2d1f8c95240d11128fdd13b34ed2ebb6a1a57ad",
+  "inputSha256": "d07dad755486d6fc5fd8eb9c2810e3a06ccc75304d963c77cbe7f9601ce16248",
   "method": "Independent NumPy raw annual moments and SciPy SLSQP with analytic gradients. 21 starts per named objective; up to five independent starts per frontier target.",
   "caseCount": 11,
   "namedObjectiveChecks": 43,
@@ -17,7 +17,7 @@
     "variance": 1.5265566588595902e-16,
     "weight": 6.994405055138486e-15
   },
-  "totalJavaScriptCaseGenerationMs": 18.719292,
+  "totalJavaScriptCaseGenerationMs": 19.279833000000004,
   "edgeStates": [
     {
       "case": "high_anchor",

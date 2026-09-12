@@ -8,6 +8,7 @@
  * Dates are month-end wealth endpoints: start is excluded from return rows.
  */
 import fs from 'node:fs/promises';
+import { realpathSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { createHash } from 'node:crypto';
@@ -72,6 +73,8 @@ async function cli() {
   if(options.out)await fs.writeFile(options.out,output);
   else process.stdout.write(output);
 }
-if(process.argv[1]&&path.resolve(process.argv[1])===fileURLToPath(import.meta.url)) {
+// Compare real paths: Node resolves symlinks in import.meta.url but not in argv[1].
+const isMain=()=>{try{return realpathSync(process.argv[1])===realpathSync(fileURLToPath(import.meta.url));}catch{return false;}};
+if(process.argv[1]&&isMain()) {
   cli().catch(e=>{console.error(e.message);process.exitCode=1;});
 }

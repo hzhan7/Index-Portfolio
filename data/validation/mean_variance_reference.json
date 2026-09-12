@@ -12,7 +12,7 @@
     "gamma": 5
   },
   "inputFile": "docs/data/history.json",
-  "inputSha256": "1450ffed20e5ca0ae8e2c8d6f2d1f8c95240d11128fdd13b34ed2ebb6a1a57ad",
+  "inputSha256": "d07dad755486d6fc5fd8eb9c2810e3a06ccc75304d963c77cbe7f9601ce16248",
   "model": {
     "assetOrder": [
       "NDX",

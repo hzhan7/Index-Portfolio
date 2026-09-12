@@ -78,7 +78,7 @@ bond_total = bond_price + coupon
 
 集中解有时合理，程序不通过暗设权重上限来强迫分散。自定义预期与历史均值都不是可靠预测保证，应使用日期、风险参数和预期收益输入检查敏感性；改变预测后，页面仍对新权重的历史CAGR、历史夏普与回撤单独复算。滚动窗口默认在各窗口重新估计均值、协方差和短债参考；自定义预期/截距/预算则在各窗口保持相同参数。这不是样本外回测。
 
-独立验证覆盖11个场景、43个目标和1111个前沿点，与SciPy多起点求解对照；[验证文件](data/validation/mean_variance_crosscheck.json)。
+独立验证覆盖11个场景、43个目标和1111个前沿点，与SciPy多起点求解对照；验证样本终点均不晚于2025-12，未覆盖2026年新增月份（含8月暂估RF）；[验证文件](data/validation/mean_variance_crosscheck.json)。
 
 模型定义参考：[CFA：Portfolio Risk and Return](https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/portfolio-risk-return-part-1)、[William Sharpe：Portfolio Choice](https://web.stanford.edu/~wfsharpe/mia/rr/mia_rr2.htm)、[William Sharpe：The Sharpe Ratio (1994)](https://web.stanford.edu/~wfsharpe/art/sr/sr.htm)。
 
@@ -124,6 +124,16 @@ node scripts/calculate-frontier.mjs --start 1999-03 --end 2026-08 --equity-incom
 node scripts/calculate-frontier.mjs --start 1999-03 --end 2026-08 --equity-income true --expected-percent 10,8,4 --anchor-percent 3 --vol-percent 12 --gamma 5
 npm run check
 npm test
+```
+
+`data/validation/`的四个验证文件都记录了生成时`docs/data/history.json`的SHA256；数据更新后须全部重新生成，否则`npm test`会报验证文件过期。SciPy复核需要NumPy与SciPy：
+
+```sh
+node scripts/validation/generate-reference-results.mjs
+python3 scripts/validation/scipy_crosscheck.py
+node scripts/validation/generate-mean-variance-cases.mjs
+python3 scripts/validation/mean_variance_crosscheck.py
+node scripts/calculate-frontier.mjs --start 1999-03 --end 2025-12 --equity-income true --bond-income true --out data/validation/mean_variance_reference.json
 ```
 
 GitHub Pages从`main`分支的`/docs`目录发布。仓库代码与网站数据同时版本管理。
